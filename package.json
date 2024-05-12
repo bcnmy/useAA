@@ -7,10 +7,21 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest --root src/"
+    "test": "vitest --root src/",
+    "storybook": "storybook dev -p 6006"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
+    "@chromatic-com/storybook": "^1.3.5",
+    "@rainbow-me/rainbowkit": "^2.0.7",
+    "@storybook/addon-essentials": "^8.0.10",
+    "@storybook/addon-interactions": "^8.0.10",
+    "@storybook/addon-links": "^8.0.10",
+    "@storybook/addon-onboarding": "^8.0.10",
+    "@storybook/blocks": "^8.0.10",
+    "@storybook/react": "^8.0.10",
+    "@storybook/react-vite": "^8.0.10",
+    "@storybook/test": "^8.0.10",
     "@testing-library/react": "^14.2.1",
     "@types/node": "^20.11.17",
     "@types/react": "^18.2.55",
@@ -22,8 +33,10 @@
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-storybook": "^0.8.0",
     "happy-dom": "^13.3.8",
     "jsdom": "^24.0.0",
+    "storybook": "^8.0.10",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
     "vitest": "^1.2.2"
@@ -32,7 +45,7 @@
     "@tanstack/react-query": "^5.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "2.0.0",
+    "viem": "2.10.5",
     "wagmi": "latest"
   },
   "dependencies": {
