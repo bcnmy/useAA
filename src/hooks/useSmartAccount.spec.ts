@@ -13,7 +13,7 @@ describe("Smart account", () => {
       rerender();
     });
 
-    const smartAccountClient = result.current;
+    const smartAccountClient = result.current.smartAccountClient;
     const smartAccountAddress = await smartAccountClient?.getAccountAddress();
 
     console.log({ smartAccountAddress });

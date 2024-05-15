@@ -1,44 +1,41 @@
 import { BuildUserOpOptions, Transaction } from "@biconomy/account";
-import { useAA } from "../providers/UseAAProvider";
-import { useState } from "react";
-import { s } from "vitest/dist/reporters-1evA5lom.js";
+import { UseMutationOptions, useMutation } from "@tanstack/react-query";
+import { useSmartAccount } from "./useSmartAccount";
+
+type UseSendTransactionArgs = {
+  manyOrOneTransactions: Transaction | Transaction[];
+  buildUseropDto?: BuildUserOpOptions;
+};
+
+type MutationOptionsWithoutMutationFn = Omit<
+  UseMutationOptions<any, any, any, any>,
+  "mutationFn" | "mutationKey"
+>;
 
 export const useSendTransaction = (
-  manyOrOneTransactions: Transaction | Transaction[],
-  buildUseropDto?: BuildUserOpOptions | undefined
+  mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient } = useAA();
+  const { smartAccountClient, queryClient } = useSmartAccount();
 
-  const [isPending, setIsPending] = useState(false);
-  const [isError, setError] = useState<Error | null>(null);
-  const [isIdle, setIdle] = useState(true);
-  const [data, setData] = useState<any>(null);
+  const useSendTransactionMutation = useMutation(
+    {
+      mutationFn: async (params: UseSendTransactionArgs) => {
+        if (!smartAccountClient) {
+          throw new Error("No smart account found!");
+        }
 
-  const mutate = async () => {
-    try {
-      setError(null);
-      setIsPending(true);
-      setIdle(false);
-      const result = await smartAccountClient?.sendTransaction(
-        manyOrOneTransactions,
-        buildUseropDto
-      );
-      setData(result);
-      setIsPending(false);
-      setIdle(true);
-    } catch (error: any) {
-      setData(null);
-      setIsPending(false);
-      setError(error);
-      setIdle(true);
-    }
-  };
+        const { manyOrOneTransactions, buildUseropDto } = params;
 
-  return {
-    isPending,
-    isError,
-    isIdle,
-    data,
-    mutate,
-  };
+        const result = await smartAccountClient.sendTransaction(
+          manyOrOneTransactions,
+          buildUseropDto
+        );
+        return result;
+      },
+      ...mutationArgs,
+    },
+    queryClient
+  );
+
+  return useSendTransactionMutation;
 };
