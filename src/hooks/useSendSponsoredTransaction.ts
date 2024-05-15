@@ -1,21 +1,30 @@
-import { BuildUserOpOptions, Transaction } from "@biconomy/account";
+import {
+  BuildUserOpOptions,
+  PaymasterMode,
+  Transaction,
+} from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "./useSmartAccount";
 import { MutationOptionsWithoutMutationFn } from "../types/mutation";
 
-type UseSendTransactionArgs = {
+type BuildUserOpOptionsWithoutPaymasterServiceData = Omit<
+  BuildUserOpOptions,
+  "paymasterServiceData"
+>;
+
+type useSendSponsoredTransactionArgs = {
   manyOrOneTransactions: Transaction | Transaction[];
-  buildUseropDto?: BuildUserOpOptions;
+  buildUseropDto?: BuildUserOpOptionsWithoutPaymasterServiceData;
 };
 
-export const useSendTransaction = (
+export const useSendSponsoredTransaction = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
   const { smartAccountClient, queryClient } = useSmartAccount();
 
-  const useSendTransactionMutation = useMutation(
+  const useSendSponsoredTransactionMutation = useMutation(
     {
-      mutationFn: async (params: UseSendTransactionArgs) => {
+      mutationFn: async (params: useSendSponsoredTransactionArgs) => {
         if (!smartAccountClient) {
           throw new Error("No smart account found!");
         }
@@ -24,7 +33,10 @@ export const useSendTransaction = (
 
         const result = await smartAccountClient.sendTransaction(
           manyOrOneTransactions,
-          buildUseropDto
+          {
+            ...buildUseropDto,
+            paymasterServiceData: { mode: PaymasterMode.SPONSORED },
+          }
         );
         return result;
       },
@@ -33,5 +45,5 @@ export const useSendTransaction = (
     queryClient
   );
 
-  return useSendTransactionMutation;
+  return useSendSponsoredTransactionMutation;
 };
