@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
-import { wagmiConfig, biConfig } from "../utils/config";
+import { wagmiConfig, biConfig } from "@/stories/utils/config";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { BiconomyProvider } from "../../providers/BiconomyProvider";
+import { BiconomyProvider } from "@/providers";
 import "@rainbow-me/rainbowkit/styles.css";
 
 const queryClient = new QueryClient();

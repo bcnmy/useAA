@@ -1,3 +1,3 @@
-export * from "./hooks";
+export * from "@/hooks";
 
-export { BiconomyProvider } from "./providers";
+export { BiconomyProvider } from "@/providers";

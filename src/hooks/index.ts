@@ -1,5 +1,7 @@
-export { useSmartAccount } from "./useSmartAccount";
+export { useSmartAccount } from "@/hooks/useSmartAccount";
 
-export { useSendTransaction } from "./useSendTransaction";
+export { useSendTransaction } from "@/hooks/useSendTransaction";
 
-export { useSendSponsoredTransaction } from "./useSendSponsoredTransaction";
+export { useSendSponsoredTransaction } from "@/hooks/useSendSponsoredTransaction";
+
+export { useSendGasTokenTransaction } from "@/hooks/useSendGasTokenTransaction";
