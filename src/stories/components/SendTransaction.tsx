@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { parseEther } from "viem";
 import { useSendTransaction } from "../../hooks";
@@ -8,7 +8,7 @@ import { useSendSponsoredTransaction } from "../../hooks";
 const SendTransactionComponent = () => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const { mutate } = useSendTransaction();
+  const { mutate, data } = useSendTransaction(); //TODO: Add a boolean 'wait' flag to the useSendTransaction options which bakes in the useEffect logic
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
@@ -20,6 +20,18 @@ const SendTransactionComponent = () => {
 
     mutate({ manyOrOneTransactions: tx });
   };
+
+  useEffect(() => {
+    (async () => {
+      if (data) {
+        const {
+          success,
+          receipt: { transactionHash },
+        } = await data.wait();
+        console.log({ success, transactionHash });
+      }
+    })();
+  }, [data]);
 
   return (
     <>
@@ -48,7 +60,7 @@ const SendTransactionComponent = () => {
 const SendSponsoredTransactionComponent = () => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const { mutate } = useSendSponsoredTransaction();
+  const { mutate, data } = useSendSponsoredTransaction(); //TODO: Add a boolean 'wait' flag to the useSendSponsoredTransaction options which bakes in the useEffect logic
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
@@ -62,6 +74,18 @@ const SendSponsoredTransactionComponent = () => {
       manyOrOneTransactions: tx,
     });
   };
+
+  useEffect(() => {
+    (async () => {
+      if (data) {
+        const {
+          success,
+          receipt: { transactionHash },
+        } = await data.wait();
+        console.log({ success, transactionHash });
+      }
+    })();
+  }, [data]);
 
   return (
     <>

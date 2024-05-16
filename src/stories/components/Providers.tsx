@@ -4,6 +4,7 @@ import { wagmiConfig, biConfig } from "../utils/config";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { BiconomyProvider } from "../../providers/BiconomyProvider";
 import "@rainbow-me/rainbowkit/styles.css";
+import { ReactNode } from "react";
 
 const queryClient = new QueryClient();
 
@@ -19,4 +20,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       </QueryClientProvider>
     </WagmiProvider>
   );
+};
+
+export const providerHoc = ({ children }: { children: ReactNode }) => {
+  return <Providers>{children}</Providers>;
 };
