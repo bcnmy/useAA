@@ -1,4 +1,7 @@
-import { SendTransaction } from "./components/SendTransaction";
+import {
+  SendSponsoredTransaction,
+  SendTransaction,
+} from "./components/SendTransaction";
 
 export default {
   title: "React Hooks",
@@ -7,4 +10,8 @@ export default {
 
 export const SendTransactionHook = () => {
   return <SendTransaction />;
+};
+
+export const SendSponsoredTransactionHook = () => {
+  return <SendSponsoredTransaction />;
 };

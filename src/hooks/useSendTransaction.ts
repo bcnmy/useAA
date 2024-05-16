@@ -1,16 +1,12 @@
 import { BuildUserOpOptions, Transaction } from "@biconomy/account";
-import { UseMutationOptions, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "./useSmartAccount";
+import { MutationOptionsWithoutMutationFn } from "../types/mutation";
 
 type UseSendTransactionArgs = {
   manyOrOneTransactions: Transaction | Transaction[];
   buildUseropDto?: BuildUserOpOptions;
 };
-
-type MutationOptionsWithoutMutationFn = Omit<
-  UseMutationOptions<any, any, any, any>,
-  "mutationFn" | "mutationKey"
->;
 
 export const useSendTransaction = (
   mutationArgs?: MutationOptionsWithoutMutationFn
