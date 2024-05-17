@@ -59,7 +59,7 @@ const SendTransactionComponent = () => {
 const SendSponsoredTransactionComponent = () => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const { mutate } = useSendGasTokenTransaction();
+  const { mutate, data } = useSendGasTokenTransaction();
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
