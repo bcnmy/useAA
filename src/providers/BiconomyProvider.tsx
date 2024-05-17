@@ -6,6 +6,9 @@ import {
   createSmartAccountClient,
   type BiconomySmartAccountV2,
 } from "@biconomy/account";
+import { createWalletClient, http } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { polygonAmoy } from "viem/chains";
 
 type BiconomyProviderProps = {
   children: ReactNode;
@@ -28,7 +31,9 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
   const { bundlerUrl, paymasterApiKey } = config;
   const [smartAccountClient, setSmartAccountClient] =
     useState<BiconomySmartAccountV2 | null>(null);
-  const { data: signer } = useWalletClient(); // TODO: Investigate why this is not working
+  const { data: signer } = useWalletClient();
+
+  // TODO: Use this for unit tests:
 
   // const signer = createWalletClient({
   //   account: privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`),
