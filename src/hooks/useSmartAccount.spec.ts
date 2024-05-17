@@ -6,17 +6,17 @@ import { useSmartAccount } from "@/hooks";
 describe("Smart account", () => {
   it("should log an account address", async () => {
     const { rerender, result } = renderHook(() => useSmartAccount(), {
-      wrapper,
-    });
+      wrapper: providerHoc
+    })
 
     await act(async () => {
-      rerender();
-    });
+      rerender()
+    })
 
-    const smartAccountClient = result.current.smartAccountClient;
-    const smartAccountAddress = await smartAccountClient?.getAccountAddress();
+    const smartAccountClient = result.current.smartAccountClient
+    const smartAccountAddress = await smartAccountClient?.getAccountAddress()
 
-    console.log({ smartAccountAddress });
-    expect(smartAccountAddress).toBeDefined();
-  });
-});
+    console.log({ smartAccountAddress })
+    expect(smartAccountAddress).toBeDefined()
+  })
+})

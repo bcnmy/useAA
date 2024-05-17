@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { parseEther } from "viem";
 import { useSendGasTokenTransaction, useSendTransaction } from "@/hooks";
@@ -7,7 +7,7 @@ import { Providers } from "@/stories/components/Providers";
 const SendTransactionComponent = () => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const { mutate } = useSendTransaction();
+  const { mutate, data } = useSendTransaction(); //TODO: Add a boolean 'wait' flag to the useSendTransaction options which bakes in the useEffect logic
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
@@ -19,6 +19,18 @@ const SendTransactionComponent = () => {
 
     mutate({ manyOrOneTransactions: tx });
   };
+
+  useEffect(() => {
+    (async () => {
+      if (data) {
+        const {
+          success,
+          receipt: { transactionHash },
+        } = await data.wait();
+        console.log({ success, transactionHash });
+      }
+    })();
+  }, [data]);
 
   return (
     <>
@@ -66,6 +78,18 @@ const SendSponsoredTransactionComponent = () => {
       },
     });
   };
+
+  useEffect(() => {
+    (async () => {
+      if (data) {
+        const {
+          success,
+          receipt: { transactionHash },
+        } = await data.wait();
+        console.log({ success, transactionHash });
+      }
+    })();
+  }, [data]);
 
   return (
     <>
