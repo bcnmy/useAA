@@ -1,9 +1,8 @@
 import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { parseEther } from "viem";
-import { useSendTransaction } from "../../hooks";
-import { Providers } from "./Providers";
-import { useSendSponsoredTransaction } from "../../hooks";
+import { useSendGasTokenTransaction, useSendTransaction } from "@/hooks";
+import { Providers } from "@/stories/components/Providers";
 
 const SendTransactionComponent = () => {
   const [value, setValue] = React.useState("");
@@ -48,7 +47,7 @@ const SendTransactionComponent = () => {
 const SendSponsoredTransactionComponent = () => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const { mutate } = useSendSponsoredTransaction();
+  const { mutate } = useSendGasTokenTransaction();
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
@@ -60,6 +59,11 @@ const SendSponsoredTransactionComponent = () => {
 
     mutate({
       manyOrOneTransactions: tx,
+      buildUseropDto: {
+        paymasterServiceData: {
+          calculateGasLimits: true,
+        },
+      },
     });
   };
 

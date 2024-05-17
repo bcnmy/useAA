@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BiconomyContext } from "../providers/BiconomyProvider";
+import { BiconomyContext } from "@/providers/BiconomyProvider";
 
 export const useSmartAccount = () => {
   const context = useContext(BiconomyContext);

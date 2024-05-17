@@ -1,7 +1,7 @@
 import { BuildUserOpOptions, Transaction } from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "./useSmartAccount";
-import { MutationOptionsWithoutMutationFn } from "../types/mutation";
+import { useSmartAccount } from "@/hooks";
+import { MutationOptionsWithoutMutationFn } from "@/types";
 
 type UseSendTransactionArgs = {
   manyOrOneTransactions: Transaction | Transaction[];
