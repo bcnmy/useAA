@@ -1,7 +1,7 @@
 import {
   SendSponsoredTransaction,
   SendTransaction,
-} from "./components/SendTransaction";
+} from "@/stories/components/SendTransaction";
 
 export default {
   title: "React Hooks",

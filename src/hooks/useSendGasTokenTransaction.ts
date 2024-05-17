@@ -7,17 +7,17 @@ import {
   UseSendSponsoredTransactionArgs,
 } from "@/types";
 
-export const useSendSponsoredTransaction = (
+export const useSendGasTokenTransaction = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient, queryClient } = useSmartAccount();
+  const { queryClient, smartAccountClient } = useSmartAccount();
 
-  const useSendSponsoredTransactionMutation = useMutation(
+  const useSendGasTokenTransactionMutation = useMutation(
     {
       mutationFn: (params: UseSendSponsoredTransactionArgs) => {
         return sendSponsoredTransaction(
           params,
-          PaymasterMode.SPONSORED,
+          PaymasterMode.ERC20,
           smartAccountClient
         );
       },
@@ -26,5 +26,5 @@ export const useSendSponsoredTransaction = (
     queryClient
   );
 
-  return useSendSponsoredTransactionMutation;
+  return useSendGasTokenTransactionMutation;
 };
