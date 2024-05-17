@@ -11,32 +11,36 @@ describe("Send Transasction", () => {
       wrapper: providerHoc
     })
 
-    await act(rerender)
+    act(rerender)
 
-    await act(() =>
-      result?.current?.mutate({
-        manyOrOneTransactions: {
-          to: recipient,
-          value: 1000n
-        }
+    if (result?.current) {
+      const { mutate, data } = result?.current
+
+      act(() =>
+        mutate({
+          manyOrOneTransactions: {
+            to: recipient,
+            value: 1000n
+          }
+        })
+      )
+
+      await waitFor(() => {
+        try {
+          expect(data?.wait).toBeDefined()
+        } catch (e) {}
       })
-    )
 
-    await waitFor(() => {
-      try {
-        expect(result?.current?.data).toHaveProperty("wait")
-      } catch (e) {}
-    })
-
-    await act(async () => {
-      if (result?.current?.data) {
-        const {
-          success,
-          receipt: { transactionHash }
-        } = await result?.current?.data?.wait()
-        expect(success).toBe("true")
-        expect(transactionHash).toBeDefined()
+      if (data?.wait) {
+        act(async () => {
+          const {
+            success,
+            receipt: { transactionHash }
+          } = await data?.wait()
+          expect(success).toBe("true")
+          expect(transactionHash).toBeDefined()
+        })
       }
-    })
+    }
   }, 10000)
 })

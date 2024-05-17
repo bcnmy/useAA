@@ -2,12 +2,10 @@ import { useMemo, useEffect, useState, createContext, ReactNode } from "react";
 import { useWalletClient } from "wagmi";
 import { QueryClient } from "@tanstack/react-query";
 import {
+  SupportedSigner,
   createSmartAccountClient,
   type BiconomySmartAccountV2,
 } from "@biconomy/account";
-import { polygonAmoy } from "viem/chains";
-import { createWalletClient, http } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
 
 type BiconomyProviderProps = {
   children: ReactNode;
@@ -30,19 +28,19 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
   const { bundlerUrl, paymasterApiKey } = config;
   const [smartAccountClient, setSmartAccountClient] =
     useState<BiconomySmartAccountV2 | null>(null);
-  // const { data: signer } = useWalletClient(); // TODO: Investigate why this is not working
+  const { data: signer } = useWalletClient(); // TODO: Investigate why this is not working
 
-  const signer = createWalletClient({
-    account: privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`),
-    chain: polygonAmoy,
-    transport: http(),
-  });
+  // const signer = createWalletClient({
+  //   account: privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`),
+  //   chain: polygonAmoy,
+  //   transport: http(),
+  // });
 
   useEffect(() => {
     const createSmartAccount = async () => {
       if (!smartAccountClient) {
         const smartAccount = await createSmartAccountClient({
-          signer,
+          signer: signer as SupportedSigner,
           bundlerUrl,
           biconomyPaymasterApiKey: paymasterApiKey,
         });
