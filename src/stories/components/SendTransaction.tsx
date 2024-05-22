@@ -3,12 +3,14 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { parseEther } from "viem";
 import { useSendGasTokenTransaction, useSendTransaction } from "@/hooks";
 import { Providers } from "@/stories/components/Providers";
+import { HookArgs } from "@/stories/utils/types";
 
-const SendTransactionComponent = () => {
+const SendTransactionComponent = (params: HookArgs) => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const { mutate, data } = useSendTransaction(); //TODO: Add a boolean 'wait' flag to the useSendTransaction options which bakes in the useEffect logic
-
+  const { mutate, data } = useSendTransaction();
+  const { wait } = params;
+  const [txHash, setTxHash] = React.useState("");
   const handleSubmit = () => {
     const etherValue = parseEther(value);
 
@@ -21,19 +23,21 @@ const SendTransactionComponent = () => {
   };
 
   useEffect(() => {
-    (async () => {
+    const waitAction = async () => {
       if (data) {
         const {
-          success,
           receipt: { transactionHash },
         } = await data.wait();
-        console.log({ success, transactionHash });
+        setTxHash(transactionHash);
       }
-    })();
-  }, [data]);
+    };
+    if (wait) {
+      waitAction();
+    }
+  }, [data, wait]);
 
   return (
-    <>
+    <div>
       <ConnectButton />
       <input
         name="address"
@@ -52,7 +56,8 @@ const SendTransactionComponent = () => {
       <button type="submit" onClick={handleSubmit}>
         Send Transaction
       </button>
-    </>
+      {txHash && <span>{txHash}</span>}
+    </div>
   );
 };
 
@@ -115,10 +120,10 @@ const SendSponsoredTransactionComponent = () => {
   );
 };
 
-export const SendTransaction = () => {
+export const SendTransaction = (params: HookArgs) => {
   return (
     <Providers>
-      <SendTransactionComponent />
+      <SendTransactionComponent {...params} />
     </Providers>
   );
 };
