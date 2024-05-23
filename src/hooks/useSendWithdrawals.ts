@@ -3,6 +3,7 @@ import {
   UserOpResponse,
   WithdrawalRequest,
 } from "@biconomy/account";
+import { useWalletClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
 import { MutationOptionsWithoutMutationFn } from "@/types";
@@ -16,6 +17,8 @@ export const useSendWithdrawals = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
   const { smartAccountClient, queryClient } = useSmartAccount();
+  const { data: signer } = useWalletClient();
+  const defaultAddress = signer?.account.address ?? null;
 
   const useSendWithdrawalsMutation = useMutation(
     {
@@ -29,7 +32,7 @@ export const useSendWithdrawals = (
 
         return smartAccountClient.withdraw(
           withdrawalRequests,
-          "0xrecipient",
+          defaultAddress,
           buildUseropDto
         );
       },
