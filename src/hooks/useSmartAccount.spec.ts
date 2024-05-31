@@ -16,7 +16,6 @@ describe("Smart account", () => {
     const smartAccountClient = result.current.smartAccountClient
     const smartAccountAddress = await smartAccountClient?.getAccountAddress()
 
-    console.log({ smartAccountAddress })
     expect(smartAccountAddress).toBeDefined()
   })
 })

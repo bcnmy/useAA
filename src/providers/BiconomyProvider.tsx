@@ -2,13 +2,11 @@ import { useMemo, useEffect, useState, createContext, ReactNode } from "react";
 import { useWalletClient } from "wagmi";
 import { QueryClient } from "@tanstack/react-query";
 import {
+  Hex,
   SupportedSigner,
   createSmartAccountClient,
   type BiconomySmartAccountV2,
 } from "@biconomy/account";
-import { createWalletClient, http } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { polygonAmoy } from "viem/chains";
 
 type BiconomyProviderProps = {
   children: ReactNode;
@@ -19,11 +17,17 @@ type BiconomyProviderProps = {
 type BiconomyContextProps = {
   smartAccountClient: BiconomySmartAccountV2 | null;
   queryClient: QueryClient | undefined;
+  smartAccountAddress: Hex;
+  bundlerUrl: string, 
+  paymasterApiKey: string;
 };
 
 export const BiconomyContext = createContext<BiconomyContextProps>({
   smartAccountClient: null,
   queryClient: undefined,
+  smartAccountAddress: "0x",
+  bundlerUrl:"",
+  paymasterApiKey: ""
 });
 
 export const BiconomyProvider = (props: BiconomyProviderProps) => {
@@ -31,15 +35,8 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
   const { bundlerUrl, paymasterApiKey } = config;
   const [smartAccountClient, setSmartAccountClient] =
     useState<BiconomySmartAccountV2 | null>(null);
+    const [smartAccountAddress, setSmartAccountAddress] = useState<Hex>("0x");
   const { data: signer } = useWalletClient();
-
-  // TODO: Use this for unit tests:
-
-  // const signer = createWalletClient({
-  //   account: privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`),
-  //   chain: polygonAmoy,
-  //   transport: http(),
-  // });
 
   useEffect(() => {
     const createSmartAccount = async () => {
@@ -50,6 +47,7 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
           biconomyPaymasterApiKey: paymasterApiKey,
         });
         setSmartAccountClient(smartAccount);
+        setSmartAccountAddress(await smartAccount.getAccountAddress());
       }
     };
 
@@ -57,8 +55,8 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
   }, [signer, bundlerUrl, paymasterApiKey, smartAccountClient]);
 
   const value = useMemo(
-    () => ({ smartAccountClient, queryClient }),
-    [smartAccountClient, queryClient]
+    () => ({ smartAccountClient, queryClient, smartAccountAddress, bundlerUrl, paymasterApiKey }),
+    [smartAccountClient, queryClient, smartAccountAddress, bundlerUrl, paymasterApiKey]
   );
 
   return (
