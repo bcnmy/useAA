@@ -37,10 +37,13 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
     useState<BiconomySmartAccountV2 | null>(null);
     const [smartAccountAddress, setSmartAccountAddress] = useState<Hex>("0x");
   const { data: signer } = useWalletClient();
+  const switchAccount =
+    smartAccountClient?.biconomySmartAccountConfig?.signer?.inner?.account
+      ?.address !== signer?.account?.address;
 
   useEffect(() => {
     const createSmartAccount = async () => {
-      if (!smartAccountClient) {
+      if (!smartAccountClient || switchAccount) {
         const smartAccount = await createSmartAccountClient({
           signer: signer as SupportedSigner,
           bundlerUrl,
@@ -52,7 +55,7 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
     };
 
     createSmartAccount();
-  }, [signer, bundlerUrl, paymasterApiKey, smartAccountClient]);
+  }, [signer, bundlerUrl, paymasterApiKey, smartAccountClient, switchAccount]);
 
   const value = useMemo(
     () => ({ smartAccountClient, queryClient, smartAccountAddress, bundlerUrl, paymasterApiKey }),
