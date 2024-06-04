@@ -1,6 +1,6 @@
 {
   "name": "@biconomy/use-aa",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "module": "./dist/_esm/index.js",
   "types": "./dist/_types/index.d.ts",
