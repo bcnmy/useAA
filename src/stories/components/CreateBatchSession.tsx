@@ -3,7 +3,6 @@ import { useCreateBatchSession } from "@/hooks";
 import { Providers } from "@/stories/components/Providers";
 import { Hex, parseAbi } from "viem";
 import { Sponsored, bigIntReplacer } from "@/utils";
-import { Policy } from "@biconomy/account";
 import { HookArgs } from "../utils/types";
 
 export type PreUseCreateBatchSessionArgs = {

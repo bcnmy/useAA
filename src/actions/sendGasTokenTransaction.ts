@@ -1,5 +1,5 @@
-import { BiconomySmartAccountV2, PaymasterMode } from "@biconomy/account";
-import { GasTokenPayment, deepMerge, getNowNonce, mergeArray } from "@/utils";
+import { BiconomySmartAccountV2 } from "@biconomy/account";
+import { GasTokenPayment, mergeArray } from "@/utils";
 import { UseSendGasTokenTransactionArgs } from "@/hooks/useSendGasTokenTransaction";
 
 export const sendGasTokenTransaction = async (

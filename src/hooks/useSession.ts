@@ -7,7 +7,6 @@ import {
 } from "@/types";
 import { useChainId } from "wagmi";
 import { Chain, Hex } from "viem";
-import { deepMerge } from "@/utils";
 
 export type CoreUseSessionArgs = {
   buildUseropDto?: BuildUserOpOptions;

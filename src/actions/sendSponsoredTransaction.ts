@@ -1,6 +1,6 @@
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 import { UseSendSponsoredTransactionArgs } from "@/types";
-import { Sponsored, getNowNonce, mergeArray } from "@/utils";
+import { Sponsored, mergeArray } from "@/utils";
 
 export const sendSponsoredTransaction = async (
   params: UseSendSponsoredTransactionArgs,
@@ -9,7 +9,6 @@ export const sendSponsoredTransaction = async (
   if (!smartAccountClient) {
     throw new Error("No smart account found!");
   }
-
 
   const buildUseropDto =
     mergeArray(params.buildUseropDto, [Sponsored])
