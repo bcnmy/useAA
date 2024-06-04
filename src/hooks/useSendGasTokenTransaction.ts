@@ -1,11 +1,17 @@
-import { PaymasterMode } from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
-import { sendSponsoredTransaction } from "@/actions";
 import {
+  BuildUserOpOptionsModified,
   MutationOptionsWithoutMutationFn,
-  UseSendSponsoredTransactionArgs,
 } from "@/types";
+import { sendGasTokenTransaction } from "@/actions/sendGasTokenTransaction";
+import { Hex, Transaction } from "@biconomy/account";
+
+export type UseSendGasTokenTransactionArgs = {
+  manyOrOneTransactions: Transaction | Transaction[];
+  preferredToken: Hex;
+  buildUseropDto?: BuildUserOpOptionsModified;
+};
 
 export const useSendGasTokenTransaction = (
   mutationArgs?: MutationOptionsWithoutMutationFn
@@ -14,10 +20,9 @@ export const useSendGasTokenTransaction = (
 
   const useSendGasTokenTransactionMutation = useMutation(
     {
-      mutationFn: (params: UseSendSponsoredTransactionArgs) => {
-        return sendSponsoredTransaction(
+      mutationFn: (params: UseSendGasTokenTransactionArgs) => {
+        return sendGasTokenTransaction(
           params,
-          PaymasterMode.ERC20,
           smartAccountClient
         );
       },

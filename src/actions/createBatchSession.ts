@@ -1,7 +1,7 @@
 import { PostUseCreateSessionArgs } from "@/hooks/useCreateSession";
-import { BiconomySmartAccountV2, Policy, UserOpResponse, createSession as createSessionFromSDK, createSessionKeyEOA } from "@biconomy/account";
+import { BiconomySmartAccountV2, CreateSessionDataParams, UserOpResponse, createABISessionDatum, createBatchSession as createBatchSessionFromSDK, createSessionKeyEOA } from "@biconomy/account";
 
-export const createSession = async (
+export const createBatchSession = async (
   params: PostUseCreateSessionArgs,
   smartAccountClient: BiconomySmartAccountV2 | null
 ): Promise<UserOpResponse> => {
@@ -13,16 +13,15 @@ export const createSession = async (
 
   const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(smartAccountClient, chain);
 
-  const policy: Policy[] = policyWithoutSessionKey.map(policyElement => ({
+  const leaves: CreateSessionDataParams[] = policyWithoutSessionKey.map(policyElement => createABISessionDatum({
     ...policyElement,
     sessionKeyAddress
   }));
 
-
-  return createSessionFromSDK(
+  return createBatchSessionFromSDK(
     smartAccountClient,
-    policy,
     sessionStorageClient,
+    leaves,
     buildUseropDto
   )
 

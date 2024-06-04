@@ -1,26 +1,22 @@
-import { BiconomySmartAccountV2, PaymasterMode } from "@biconomy/account";
+import { BiconomySmartAccountV2 } from "@biconomy/account";
 import { UseSendSponsoredTransactionArgs } from "@/types";
+import { Sponsored, getNowNonce, mergeArray } from "@/utils";
 
 export const sendSponsoredTransaction = async (
   params: UseSendSponsoredTransactionArgs,
-  mode: PaymasterMode.SPONSORED | PaymasterMode.ERC20,
   smartAccountClient: BiconomySmartAccountV2 | null
 ) => {
   if (!smartAccountClient) {
     throw new Error("No smart account found!");
   }
 
-  const { manyOrOneTransactions, buildUseropDto } = params;
+
+  const buildUseropDto =
+    mergeArray(params.buildUseropDto, [Sponsored])
 
   const result = await smartAccountClient.sendTransaction(
-    manyOrOneTransactions,
-    {
-      ...buildUseropDto,
-      paymasterServiceData: {
-        ...(buildUseropDto?.paymasterServiceData || {}),
-        mode,
-      },
-    }
+    params.manyOrOneTransactions,
+    buildUseropDto
   );
   return result;
 };

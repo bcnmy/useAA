@@ -13,3 +13,7 @@ export { useDeploySmartAccount } from "@/hooks/useDeploySmartAccount";
 export { useSendWithdrawals } from "@/hooks/useSendWithdrawals";
 
 export { useSession } from "@/hooks/useSession";
+
+export { useCreateBatchSession } from "@/hooks/useCreateBatchSession";
+
+export { useBatchSession } from "@/hooks/useBatchSession";

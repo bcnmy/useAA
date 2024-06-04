@@ -11,5 +11,5 @@ export const DeployHook = (args: HookArgs) => {
 };
 
 DeployHook.args = {
-  wait: false,
+  wait: true,
 };

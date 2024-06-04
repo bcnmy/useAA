@@ -1,47 +1,40 @@
 import { BuildUserOpOptions, getChain, Transaction } from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
-import { useSession as useSessionAction } from "@/actions";
+import { useBatchSession as useBatchSessionAction } from "@/actions";
 import {
   MutationOptionsWithoutMutationFn,
 } from "@/types";
 import { useChainId } from "wagmi";
 import { Chain, Hex } from "viem";
-import { deepMerge } from "@/utils";
+import { getNowNonce, mergeArray } from "@/utils";
 
-export type CoreUseSessionArgs = {
+export type CoreUseBatchSessionArgs = {
   buildUseropDto?: BuildUserOpOptions;
   manyOrOneTx: Transaction | Transaction[];
+  correspondingIndexes: number[]
 };
-export type PostUseSessionArgs = CoreUseSessionArgs & {
+export type PostUseBatchSessionArgs = CoreUseBatchSessionArgs & {
   chain: Chain;
   bundlerUrl: string;
   smartAccountAddress: Hex;
   biconomyPaymasterApiKey: string;
 };
 
-
-
-export const useSession = (
+export const useBatchSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
   const { queryClient, bundlerUrl, paymasterApiKey, smartAccountAddress } = useSmartAccount();
   const chainId = useChainId();
 
-  const useSessionMutation = useMutation(
+  const useBatchSessionMutation = useMutation(
     {
-      mutationFn: (_params: CoreUseSessionArgs) => {
+      mutationFn: (_params: CoreUseBatchSessionArgs) => {
 
-        const defaultOptions = {
-          nonceOptions: {
-            nonceKey: Date.now()
-          }
-        }
-
-        const buildUseropDto = deepMerge(defaultOptions, _params.buildUseropDto);
+        const buildUseropDto = mergeArray(_params.buildUseropDto, [getNowNonce()]);
 
         const chain = getChain(chainId);
-        const params: PostUseSessionArgs = {
+        const params: PostUseBatchSessionArgs = {
           bundlerUrl,
           biconomyPaymasterApiKey: paymasterApiKey,
           smartAccountAddress,
@@ -50,12 +43,12 @@ export const useSession = (
           buildUseropDto
         };
 
-        return useSessionAction(params);
+        return useBatchSessionAction(params);
       },
       ...mutationArgs,
     },
     queryClient
   );
 
-  return useSessionMutation;
+  return useBatchSessionMutation;
 };

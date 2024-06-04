@@ -18,6 +18,6 @@ export const WithdrawHook = (args: WithdrawHookArgs) => {
 };
 
 WithdrawHook.args = {
-  wait: false,
+  wait: true,
   paymasterMode: PaymasterMode.SPONSORED,
 };

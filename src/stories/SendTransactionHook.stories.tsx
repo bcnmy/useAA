@@ -1,4 +1,5 @@
 import {
+  SendGasTokenTransaction,
   SendSponsoredTransaction,
   SendTransaction,
 } from "@/stories/components/SendTransaction";
@@ -9,14 +10,19 @@ export default {
   component: SendTransaction,
 };
 
+
 export const SendTransactionHook = (args: HookArgs) => {
   return <SendTransaction {...args} />;
 };
 
 SendTransactionHook.args = {
-  wait: false,
+  wait: true,
 };
 
 export const SendSponsoredTransactionHook = () => {
   return <SendSponsoredTransaction />;
 };
+
+export const SendGasTokenTransactionHook = () => {
+  return <SendGasTokenTransaction />;
+}

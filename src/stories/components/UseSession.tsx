@@ -2,7 +2,8 @@ import React from "react";
 import { useSession, useSmartAccount } from "@/hooks";
 import { Providers } from "@/stories/components/Providers";
 import { encodeFunctionData, parseAbi } from "viem";
-import { PaymasterMode } from "@biconomy/account";
+import { Sponsored } from "@/utils";
+import { HookArgs } from "../utils/types";
 
 export type PreUseUseSessionArgs = {
   chainId: number;
@@ -13,7 +14,7 @@ export const safeMint = parseAbi([
   "function safeMint(address owner) view returns (uint balance)"
 ])
 
-const UseSessionComponent = () => {
+const UseSessionComponent = ({ wait }: HookArgs) => {
   const { mutate, isPending, isError, error, isSuccess, data } = useSession();
   const [txHash, setTxHash] = React.useState("");
   const { smartAccountAddress } = useSmartAccount();
@@ -30,14 +31,7 @@ const UseSessionComponent = () => {
     }
 
     mutate({
-      buildUseropDto: {
-        paymasterServiceData: {
-          mode: PaymasterMode.SPONSORED,
-        },
-        nonceOptions: {
-          nonceKey: Date.now()
-        }
-      },
+      buildUseropDto: Sponsored,
       manyOrOneTx,
     });
   };
@@ -51,7 +45,10 @@ const UseSessionComponent = () => {
         setTxHash(transactionHash);
       }
     };
-  }, [data]);
+    if (wait) {
+      waitAction();
+    }
+  }, [data, wait]);
 
   return (
     <div>
@@ -65,10 +62,10 @@ const UseSessionComponent = () => {
   );
 };
 
-export const UseSession = () => {
+export const UseSession = (params: HookArgs) => {
   return (
     <Providers>
-      <UseSessionComponent />
+      <UseSessionComponent {...params} />
     </Providers>
   );
 };
