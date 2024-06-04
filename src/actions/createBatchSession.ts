@@ -1,0 +1,28 @@
+import { PostUseCreateSessionArgs } from "@/hooks/useCreateSession";
+import { BiconomySmartAccountV2, CreateSessionDataParams, UserOpResponse, createABISessionDatum, createBatchSession as createBatchSessionFromSDK, createSessionKeyEOA } from "@biconomy/account";
+
+export const createBatchSession = async (
+  params: PostUseCreateSessionArgs,
+  smartAccountClient: BiconomySmartAccountV2 | null
+): Promise<UserOpResponse> => {
+  if (!smartAccountClient) {
+    throw new Error("No smart account found!");
+  }
+
+  const { policy: policyWithoutSessionKey, chain, buildUseropDto } = params;
+
+  const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(smartAccountClient, chain);
+
+  const leaves: CreateSessionDataParams[] = policyWithoutSessionKey.map(policyElement => createABISessionDatum({
+    ...policyElement,
+    sessionKeyAddress
+  }));
+
+  return createBatchSessionFromSDK(
+    smartAccountClient,
+    sessionStorageClient,
+    leaves,
+    buildUseropDto
+  )
+
+};

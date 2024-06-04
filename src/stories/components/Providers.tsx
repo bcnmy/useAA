@@ -9,19 +9,19 @@ import { ReactNode } from "react";
 const queryClient = new QueryClient();
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          <BiconomyProvider config={biConfig} queryClient={queryClient}>
-            {children}
-          </BiconomyProvider>
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
+	return (
+		<WagmiProvider config={wagmiConfig}>
+			<QueryClientProvider client={queryClient}>
+				<RainbowKitProvider>
+					<BiconomyProvider config={biConfig} queryClient={queryClient}>
+						{children}
+					</BiconomyProvider>
+				</RainbowKitProvider>
+			</QueryClientProvider>
+		</WagmiProvider>
+	);
 };
 
 export const providerHoc = ({ children }: { children: ReactNode }) => {
-  return <Providers>{children}</Providers>;
+	return <Providers>{children}</Providers>;
 };
