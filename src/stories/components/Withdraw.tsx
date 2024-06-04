@@ -3,6 +3,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useSendWithdrawals } from "@/hooks";
 import { Providers } from "@/stories/components/Providers";
 import { WithdrawHookArgs } from "@/stories/utils/types";
+import { UserOpReceipt } from "@biconomy/account";
 
 const WithdrawComponent = (params: WithdrawHookArgs) => {
   const { wait, paymasterMode } = params;
@@ -12,6 +13,9 @@ const WithdrawComponent = (params: WithdrawHookArgs) => {
 
   const withdrawalRequest = {
     buildUseropDto: { paymasterServiceData: { mode: paymasterMode } },
+    // waitTxnCallback: (results: UserOpReceipt) => {
+    //   console.log("results-", results);
+    // },
   };
 
   const handleWithdraw = () => {

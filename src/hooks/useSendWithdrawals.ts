@@ -2,6 +2,7 @@ import {
   BuildUserOpOptions,
   UserOpResponse,
   WithdrawalRequest,
+  UserOpReceipt,
 } from "@biconomy/account";
 import { useWalletClient } from "wagmi";
 import { useMutation } from "@tanstack/react-query";
@@ -11,6 +12,7 @@ import { MutationOptionsWithoutMutationFn } from "@/types";
 type UseSendWithdrawalsArgs = {
   buildUseropDto?: BuildUserOpOptions;
   withdrawalRequests?: WithdrawalRequest[] | null;
+  waitTxnCallback?: (userOpReceipt: UserOpReceipt) => any;
 };
 
 export const useSendWithdrawals = (
@@ -22,19 +24,39 @@ export const useSendWithdrawals = (
 
   const useSendWithdrawalsMutation = useMutation(
     {
-      mutationFn: (
-        variables: UseSendWithdrawalsArgs
-      ): Promise<UserOpResponse> => {
+      mutationFn: async <
+        T extends UseSendWithdrawalsArgs,
+        R = T extends { waitTxnCallback: (userOpReceipt: UserOpReceipt) => any }
+          ? UserOpReceipt
+          : UserOpResponse,
+      >(
+        variables: T
+      ): Promise<R> => {
         if (!smartAccountClient) {
           throw new Error("No smart account found");
         }
-        const { withdrawalRequests, buildUseropDto } = variables;
 
-        return smartAccountClient.withdraw(
+        const { withdrawalRequests, buildUseropDto, waitTxnCallback } =
+          variables;
+
+        if (!waitTxnCallback) {
+          return (await smartAccountClient.withdraw(
+            withdrawalRequests,
+            defaultAddress,
+            buildUseropDto
+          )) as R;
+        }
+
+        const userOpResponse = await smartAccountClient.withdraw(
           withdrawalRequests,
           defaultAddress,
           buildUseropDto
         );
+
+        const userOpReceipt = await userOpResponse.wait();
+
+        waitTxnCallback(userOpReceipt);
+        return userOpReceipt as R;
       },
       ...mutationArgs,
     },
