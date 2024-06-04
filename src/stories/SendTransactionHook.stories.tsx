@@ -19,10 +19,10 @@ SendTransactionHook.args = {
   wait: true,
 };
 
-export const SendSponsoredTransactionHook = () => {
-  return <SendSponsoredTransaction />;
+export const SendSponsoredTransactionHook = (params: HookArgs) => {
+  return <SendSponsoredTransaction {...params}/>;
 };
 
-export const SendGasTokenTransactionHook = () => {
-  return <SendGasTokenTransaction />;
+export const SendGasTokenTransactionHook = (params: HookArgs) => {
+  return <SendGasTokenTransaction {...params} />;
 }

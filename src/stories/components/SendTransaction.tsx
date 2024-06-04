@@ -61,10 +61,11 @@ const SendTransactionComponent = (params: HookArgs) => {
   );
 };
 
-const SendSponsoredTransactionComponent = () => {
+const SendSponsoredTransactionComponent = ({wait}: HookArgs) => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC");
-  const { mutate, data } = useSendSponsoredTransaction();
+  const { mutate, isPending, isError, error, isSuccess, data } = useSendSponsoredTransaction();
+  const [txHash, setTxHash] = React.useState("");
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
@@ -78,17 +79,19 @@ const SendSponsoredTransactionComponent = () => {
   };
 
   useEffect(() => {
-    (async () => {
+    const waitAction = async () => {
       if (data) {
         const {
-          success,
           receipt: { transactionHash },
         } = await data.wait();
-        console.log({ success, transactionHash });
+        setTxHash(transactionHash);
       }
-    })();
-  }, [data]);
-
+    };
+    if (wait) {
+      waitAction();
+    }
+  }, [data, wait]);
+  
   return (
     <>
       <ConnectButton />
@@ -107,16 +110,21 @@ const SendSponsoredTransactionComponent = () => {
         onChange={(e) => setValue(e.target.value)}
       />
       <button type="submit" onClick={handleSubmit}>
-        Send Transaction
+        {isPending ? "Sending Transaction..." : "Send Transaction"}
       </button>
+
+      {isError && <span>{error?.message}</span>}
+      {isSuccess && <span>Success!</span>}
+      {txHash && <span>Transaction hash: {txHash}</span>}
     </>
   );
 };
 
-const SendGasTokenTransactionComponent = () => {
+const SendGasTokenTransactionComponent = ({wait}: HookArgs) => {
   const [value, setValue] = React.useState("");
   const [address, setAddress] = React.useState("0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC");
-  const { mutate, data } = useSendGasTokenTransaction();
+  const [txHash, setTxHash] = React.useState("");
+  const { mutate, isPending, isError, error, isSuccess, data } = useSendGasTokenTransaction();
 
   const handleSubmit = () => {
     const etherValue = parseEther(value);
@@ -132,17 +140,20 @@ const SendGasTokenTransactionComponent = () => {
     });
   };
 
-  useEffect(() => {
-    (async () => {
+  React.useEffect(() => {
+    const waitAction = async () => {
       if (data) {
         const {
-          success,
           receipt: { transactionHash },
         } = await data.wait();
-        console.log({ success, transactionHash });
+        setTxHash(transactionHash);
       }
-    })();
-  }, [data]);
+    };
+    if (wait) {
+      waitAction();
+    }
+
+  }, [data, wait]);
 
   return (
     <>
@@ -162,16 +173,21 @@ const SendGasTokenTransactionComponent = () => {
         onChange={(e) => setValue(e.target.value)}
       />
       <button type="submit" onClick={handleSubmit}>
-        Send Transaction
+        {isPending ? "Sending Transaction..." : "Send Transaction"}
       </button>
+
+      {isError && <span>{error?.message}</span>}
+      {isSuccess && <span>Success!</span>}
+      {txHash && <span>Transaction hash: {txHash}</span>}
+
     </>
   );
 };
 
-export const SendGasTokenTransaction = () => {
+export const SendGasTokenTransaction = (params: HookArgs) => {
   return (
     <Providers>
-      <SendGasTokenTransactionComponent />
+      <SendGasTokenTransactionComponent{...params} />
     </Providers>
   );
 }
@@ -184,10 +200,10 @@ export const SendTransaction = (params: HookArgs) => {
   );
 };
 
-export const SendSponsoredTransaction = () => {
+export const SendSponsoredTransaction = (params: HookArgs) => {
   return (
     <Providers>
-      <SendSponsoredTransactionComponent />
+      <SendSponsoredTransactionComponent {...params} />
     </Providers>
   );
 };
