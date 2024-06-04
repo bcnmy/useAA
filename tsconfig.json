@@ -34,9 +34,6 @@
   "rules": {
     "no-non-null-assertion": "off"
   },
-  "exclude": [
-    "src/stories"
-  ],
   "include": [
     "src"
   ],

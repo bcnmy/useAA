@@ -17,3 +17,5 @@ export { useSession } from "@/hooks/useSession";
 export { useCreateBatchSession } from "@/hooks/useCreateBatchSession";
 
 export { useBatchSession } from "@/hooks/useBatchSession";
+
+export { useUserOpWait } from "@/hooks/useUserOpWait";

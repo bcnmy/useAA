@@ -8,5 +8,8 @@
     "declaration": true,
     "declarationMap": true,
     "noEmit": false
-  }
+  },
+  "exclude": [
+    "src/stories"
+  ]
 }

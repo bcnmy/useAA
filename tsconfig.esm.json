@@ -5,5 +5,8 @@
     "outDir": "./dist/_esm",
     "allowImportingTsExtensions": false,
     "noEmit": false,
-  }
+  },
+  "exclude": [
+    "src/stories"
+  ],
 }
