@@ -14,14 +14,18 @@ const order = parseAbi(["function submitOrder(uint256 _orderNum)"]);
 const cancel = parseAbi(["function submitCancel(uint256 _orderNum)"]);
 
 const CreateBatchSessionComponent = (params: HookArgs) => {
-
-	const { mutate, isPending, isError, error, isSuccess, data: userOpResponse } =
-		useCreateBatchSession();
-
 	const {
-		isSuccess: waitIsSuccess,
-		data: waitData,
-	} = useUserOpWait({ userOpResponse });
+		mutate,
+		isPending,
+		isError,
+		error,
+		isSuccess,
+		data: userOpResponse,
+	} = useCreateBatchSession();
+
+	const { isSuccess: waitIsSuccess, data: waitData } = useUserOpWait({
+		userOpResponse,
+	});
 
 	const policy = [
 		{
@@ -58,10 +62,11 @@ const CreateBatchSessionComponent = (params: HookArgs) => {
 		},
 	];
 
-	const handleCreateBatchSession = () => mutate({
-    buildUseropDto: Sponsored,
-    policy,
-  });
+	const handleCreateBatchSession = () =>
+		mutate({
+			buildUseropDto: Sponsored,
+			policy,
+		});
 
 	return (
 		<div>
@@ -70,7 +75,9 @@ const CreateBatchSessionComponent = (params: HookArgs) => {
 			</button>
 			{isError && <span>{error.message}</span>}
 			{isSuccess && <span>Smart account created a batch session!</span>}
-			{waitIsSuccess && <span>Transaction hash: {waitData?.receipt?.transactionHash}</span>}
+			{waitIsSuccess && (
+				<span>Transaction hash: {waitData?.receipt?.transactionHash}</span>
+			)}
 
 			<pre>{JSON.stringify(policy, bigIntReplacer, 2)}</pre>
 		</div>
