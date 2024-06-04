@@ -20,8 +20,6 @@ export type PostUseSessionArgs = CoreUseSessionArgs & {
   biconomyPaymasterApiKey: string;
 };
 
-
-
 export const useSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
@@ -32,14 +30,6 @@ export const useSession = (
     {
       mutationFn: (_params: CoreUseSessionArgs) => {
 
-        const defaultOptions = {
-          nonceOptions: {
-            nonceKey: Date.now()
-          }
-        }
-
-        const buildUseropDto = deepMerge(defaultOptions, _params.buildUseropDto);
-
         const chain = getChain(chainId);
         const params: PostUseSessionArgs = {
           bundlerUrl,
@@ -47,7 +37,6 @@ export const useSession = (
           smartAccountAddress,
           chain,
           ..._params,
-          buildUseropDto
         };
 
         return useSessionAction(params);
