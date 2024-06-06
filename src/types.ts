@@ -1,5 +1,5 @@
 import {
-  Transaction,
+  Transaction, Policy as PolicyFromSDK
 } from "@biconomy/account";
 import { UseMutationOptions } from "@tanstack/react-query";
 import { PartialBuildOptions } from "./utils";
@@ -14,3 +14,4 @@ export type UseSendSponsoredTransactionArgs = {
   options?: PartialBuildOptions;
 };
 
+export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">

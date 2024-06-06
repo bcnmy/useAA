@@ -4,6 +4,7 @@ import { useSmartAccount } from "@/hooks";
 import { createSession } from "@/actions";
 import {
   MutationOptionsWithoutMutationFn,
+  Policy,
 } from "@/types";
 import { useChainId } from "wagmi";
 import { Chain } from "viem";
@@ -16,8 +17,6 @@ export type CoreUseCreateSessionArgs = {
 export type PostUseCreateSessionArgs = CoreUseCreateSessionArgs & {
   chain: Chain;
 };
-export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
-
 export const useCreateSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {

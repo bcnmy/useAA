@@ -3,11 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
 import {
   MutationOptionsWithoutMutationFn,
+  Policy,
 } from "@/types";
 import { useChainId } from "wagmi";
 import { Chain } from "viem";
 import { createBatchSession } from "@/actions/createBatchSession";
-import { Policy } from "./useCreateSession";
 import { PartialBuildOptions } from "..";
 
 export type CoreUseCreateBatchSessionArgs = {
