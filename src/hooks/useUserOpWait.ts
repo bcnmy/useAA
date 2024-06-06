@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query"
 import type { UseQueryParameters } from "wagmi/query"
 
-type UseUserOpPayload = {
+export type UseUserOpPayload = {
   userOpResponse: UserOpResponse | undefined
 }
 

@@ -7,7 +7,7 @@ import {
   getSingleSessionTxParams
 } from "@biconomy/account"
 
-export const useSession = async (
+export const useSessionAction = async (
   params: PostUseSessionArgs
 ): Promise<UserOpResponse> => {
   const {

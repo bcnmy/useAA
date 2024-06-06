@@ -1,5 +1,6 @@
 import { useSmartAccount } from "@/hooks"
-import type { MutationOptionsWithoutMutationFn } from "@/types"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
+
 import type {
   BuildUserOpOptions,
   UserOpResponse,
@@ -8,7 +9,7 @@ import type {
 import { useMutation } from "@tanstack/react-query"
 import { useWalletClient } from "wagmi"
 
-type UseSendWithdrawalsArgs = {
+export type UseSendWithdrawalsArgs = {
   options?: BuildUserOpOptions
   withdrawalRequests?: WithdrawalRequest[] | null
 }

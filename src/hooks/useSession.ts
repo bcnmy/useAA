@@ -1,6 +1,6 @@
-import { useSession as useSessionAction } from "@/actions"
+import { useSessionAction } from "@/actions"
 import { useSmartAccount } from "@/hooks"
-import type { MutationOptionsWithoutMutationFn } from "@/types"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 import {
   type BuildUserOpOptions,
   type Transaction,

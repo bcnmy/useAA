@@ -1,6 +1,7 @@
-import { useBatchSession as useBatchSessionAction } from "@/actions"
+import { useBatchSessionAction } from "@/actions"
 import { useSmartAccount } from "@/hooks"
-import type { MutationOptionsWithoutMutationFn } from "@/types"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
+
 import { type PartialBuildOptions, getNowNonce, mergeOptions } from "@/utils"
 import { type Transaction, getChain } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"

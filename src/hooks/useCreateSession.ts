@@ -1,11 +1,12 @@
 import { createSession } from "@/actions"
-import { useSmartAccount } from "@/hooks"
-import type { MutationOptionsWithoutMutationFn, Policy } from "@/types"
-import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account"
+import { type Policy, useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
+
+import type { PartialBuildOptions } from "@/utils"
+import { getChain } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import type { Chain } from "viem"
 import { useChainId } from "wagmi"
-import type { PartialBuildOptions } from ".."
 
 export type CoreUseCreateSessionArgs = {
   policy: Policy[]

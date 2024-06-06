@@ -14,13 +14,13 @@ import {
 } from "react"
 import { useWalletClient } from "wagmi"
 
-type BiconomyProviderProps = {
+export type BiconomyProviderProps = {
   children: ReactNode
   config: { bundlerUrl: string; paymasterApiKey: string }
   queryClient: QueryClient | undefined
 }
 
-type BiconomyContextProps = {
+export type BiconomyContextProps = {
   smartAccountClient: BiconomySmartAccountV2 | null
   queryClient: QueryClient | undefined
   smartAccountAddress: Hex

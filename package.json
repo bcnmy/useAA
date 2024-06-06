@@ -22,7 +22,7 @@
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "bun run lint --apply",
-    "docs": "typedoc --tsconfig ./tsconfig/tsconfig.esm.json",
+    "docs": "typedoc --tsconfig ./tsconfig.esm.json",
     "docs:deploy": "bun run docs && gh-pages -d docs"
   },
   "exports": {
@@ -31,7 +31,7 @@
       "import": "./dist/_esm/index.js"
     }
   },
-  "devDependencies": {    
+  "devDependencies": {
     "typedoc": "^0.25.9",
     "@biomejs/biome": "latest",
     "@changesets/cli": "^2.27.5",

@@ -7,7 +7,7 @@ import {
   getBatchSessionTxParams
 } from "@biconomy/account"
 
-export const useBatchSession = async (
+export const useBatchSessionAction = async (
   params: PostUseBatchSessionArgs
 ): Promise<UserOpResponse> => {
   const {
