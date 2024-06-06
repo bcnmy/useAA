@@ -9,8 +9,8 @@ import { useChainId } from "wagmi";
 import { Chain, Hex } from "viem";
 
 export type CoreUseSessionArgs = {
-  buildUseropDto?: BuildUserOpOptions;
-  manyOrOneTx: Transaction | Transaction[];
+  options?: BuildUserOpOptions;
+  transactions: Transaction | Transaction[];
 };
 export type PostUseSessionArgs = CoreUseSessionArgs & {
   chain: Chain;

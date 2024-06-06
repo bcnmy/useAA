@@ -64,7 +64,7 @@ const CreateBatchSessionComponent = (params: HookArgs) => {
 
 	const handleCreateBatchSession = () =>
 		mutate({
-			buildUseropDto: Sponsored,
+			options: Sponsored,
 			policy,
 		});
 

@@ -1,4 +1,4 @@
-import { BuildUserOpOptions, getChain, Transaction } from "@biconomy/account";
+import { getChain, Transaction } from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
 import { useBatchSession as useBatchSessionAction } from "@/actions";
@@ -7,11 +7,11 @@ import {
 } from "@/types";
 import { useChainId } from "wagmi";
 import { Chain, Hex } from "viem";
-import { getNowNonce, mergeArray } from "@/utils";
+import { getNowNonce, mergeOptions, PartialBuildOptions } from "@/utils";
 
 export type CoreUseBatchSessionArgs = {
-  buildUseropDto?: BuildUserOpOptions;
-  manyOrOneTx: Transaction | Transaction[];
+  options?: PartialBuildOptions;
+  transactions: Transaction | Transaction[];
   correspondingIndexes: number[]
 };
 export type PostUseBatchSessionArgs = CoreUseBatchSessionArgs & {
@@ -30,9 +30,7 @@ export const useBatchSession = (
   const useBatchSessionMutation = useMutation(
     {
       mutationFn: (_params: CoreUseBatchSessionArgs) => {
-
-        const buildUseropDto = mergeArray(_params.buildUseropDto, [getNowNonce()]);
-
+        const options = mergeOptions([_params.options, getNowNonce()]);
         const chain = getChain(chainId);
         const params: PostUseBatchSessionArgs = {
           bundlerUrl,
@@ -40,7 +38,7 @@ export const useBatchSession = (
           smartAccountAddress,
           chain,
           ..._params,
-          buildUseropDto
+          options
         };
 
         return useBatchSessionAction(params);

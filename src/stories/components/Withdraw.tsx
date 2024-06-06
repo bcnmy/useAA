@@ -2,16 +2,17 @@ import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useSendWithdrawals } from "@/hooks";
 import { Providers } from "@/stories/components/Providers";
-import { WithdrawHookArgs } from "@/stories/utils/types";
+import { HookArgs } from "@/stories/utils/types";
+import { Sponsored } from "@/utils";
 
-const WithdrawComponent = (params: WithdrawHookArgs) => {
-  const { wait, paymasterMode } = params;
+const WithdrawComponent = (params: HookArgs) => {
+  const { wait } = params;
   const { mutate, isPending, isError, error, isSuccess, data } =
     useSendWithdrawals();
   const [txHash, setTxHash] = React.useState("");
 
   const withdrawalRequest = {
-    buildUseropDto: { paymasterServiceData: { mode: paymasterMode } },
+    options: Sponsored,
   };
 
   const handleWithdraw = () => {
@@ -45,7 +46,7 @@ const WithdrawComponent = (params: WithdrawHookArgs) => {
   );
 };
 
-export const Withdraw = (params: WithdrawHookArgs) => {
+export const Withdraw = (params: HookArgs) => {
   return (
     <Providers>
       <WithdrawComponent {...params} />

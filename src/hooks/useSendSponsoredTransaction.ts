@@ -11,6 +11,7 @@ export const useSendSponsoredTransaction = (
 ) => {
   const { smartAccountClient, queryClient } = useSmartAccount();
 
+
   const useSendSponsoredTransactionMutation = useMutation(
     {
       mutationFn: (params: UseSendSponsoredTransactionArgs) => {

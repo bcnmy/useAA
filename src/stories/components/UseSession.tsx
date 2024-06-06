@@ -21,7 +21,7 @@ const UseSessionComponent = ({ wait }: HookArgs) => {
 
   const handleUseSession = () => {
 
-    const manyOrOneTx = {
+    const transactions = {
       to: nftAddress,
       data: encodeFunctionData({
         abi: safeMint,
@@ -31,8 +31,8 @@ const UseSessionComponent = ({ wait }: HookArgs) => {
     }
 
     mutate({
-      buildUseropDto: Sponsored,
-      manyOrOneTx,
+      options: Sponsored,
+      transactions,
     });
   };
 

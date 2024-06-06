@@ -1,12 +1,12 @@
 import { PostUseSessionArgs } from "@/hooks/useSession";
-import { getNowNonce, mergeArray } from "@/utils";
+import { getNowNonce, mergeOptions } from "@/utils";
 import { Hex, type UserOpResponse, createSessionSmartAccountClient, getSingleSessionTxParams } from "@biconomy/account";
 
 export const useSession = async (
   params: PostUseSessionArgs,
 ): Promise<UserOpResponse> => {
 
-  const { smartAccountAddress, chain, manyOrOneTx, biconomyPaymasterApiKey, bundlerUrl } = params;
+  const { smartAccountAddress, chain, transactions, biconomyPaymasterApiKey, bundlerUrl } = params;
   const usersSmartAccountClient = await createSessionSmartAccountClient({
     accountAddress: smartAccountAddress as Hex,
     bundlerUrl,
@@ -21,9 +21,9 @@ export const useSession = async (
     null
   )
 
-  const buildUseropDto =
-    mergeArray(params.buildUseropDto, [getNowNonce(), singleSessionParams])
+  const options =
+    mergeOptions([params.options, getNowNonce(), singleSessionParams])
 
-  return usersSmartAccountClient.sendTransaction(manyOrOneTx, buildUseropDto);
+  return usersSmartAccountClient.sendTransaction(transactions, options);
 
 };

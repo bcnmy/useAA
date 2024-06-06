@@ -1,4 +1,4 @@
-import { BuildUserOpOptions, Policy, getChain } from "@biconomy/account";
+import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
 import { createSession } from "@/actions";
@@ -7,15 +7,16 @@ import {
 } from "@/types";
 import { useChainId } from "wagmi";
 import { Chain } from "viem";
+import { PartialBuildOptions } from "..";
 
 export type CoreUseCreateSessionArgs = {
-  policy: PolicyElement[];
-  buildUseropDto?: BuildUserOpOptions;
+  policy: Policy[];
+  options?: PartialBuildOptions;
 };
 export type PostUseCreateSessionArgs = CoreUseCreateSessionArgs & {
   chain: Chain;
 };
-export type PolicyElement = Omit<Policy, "sessionKeyAddress">
+export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
 
 export const useCreateSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
