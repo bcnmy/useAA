@@ -68,7 +68,9 @@
     "vitest": "^1.2.2",
     "@size-limit/esbuild-why": "^11",
     "@size-limit/preset-small-lib": "^11",
-    "size-limit": "^11"
+    "size-limit": "^11",
+    "@commitlint/cli": "^19.0.3",
+    "@commitlint/config-conventional": "^19.0.3"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.18.1",
@@ -77,5 +79,12 @@
     "viem": "^2",
     "wagmi": "^2",
     "@biconomy/account": "^4.4.5"
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "bun run format && bun run lint:fix",
+    "commit-msg": "npx --no -- commitlint --edit ${1}"
   }
 }
