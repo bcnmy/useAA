@@ -1,12 +1,12 @@
 import { PostUseBatchSessionArgs } from "@/hooks/useBatchSession";
-import { getNowNonce, mergeArray } from "@/utils";
+import { getNowNonce, mergeOptions } from "@/utils";
 import { Hex, type UserOpResponse, createSessionSmartAccountClient, getBatchSessionTxParams } from "@biconomy/account";
 
 export const useBatchSession = async (
   params: PostUseBatchSessionArgs,
 ): Promise<UserOpResponse> => {
 
-  const { smartAccountAddress, chain, manyOrOneTx, biconomyPaymasterApiKey, bundlerUrl, correspondingIndexes } = params;
+  const { smartAccountAddress, chain, transactions, biconomyPaymasterApiKey, bundlerUrl, correspondingIndexes } = params;
   const usersSmartAccountClient = await createSessionSmartAccountClient({
     accountAddress: smartAccountAddress as Hex,
     bundlerUrl,
@@ -15,15 +15,15 @@ export const useBatchSession = async (
   }, smartAccountAddress as Hex, true);
 
 
-  const batchSessionParams = await getBatchSessionTxParams(Array.isArray(manyOrOneTx) ? manyOrOneTx : [manyOrOneTx],
+  const batchSessionParams = await getBatchSessionTxParams(Array.isArray(transactions) ? transactions : [transactions],
     correspondingIndexes,
     smartAccountAddress,
     chain
   )
 
-  const buildUseropDto =
-    mergeArray(params.buildUseropDto, [getNowNonce(), batchSessionParams])
+  const options =
+    mergeOptions([params.options, getNowNonce(), batchSessionParams])
 
-  return usersSmartAccountClient.sendTransaction(manyOrOneTx, buildUseropDto);
+  return usersSmartAccountClient.sendTransaction(transactions, options);
 
 };

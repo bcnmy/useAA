@@ -1,19 +1,13 @@
 import { PaymasterMode } from "@biconomy/account";
 import { Withdraw } from "@/stories/components/Withdraw";
-import { WithdrawHookArgs } from "@/stories/utils/types";
+import { HookArgs } from "@/stories/utils/types";
 
 export default {
   title: "Withdraw",
   component: Withdraw,
-  argTypes: {
-    paymasterMode: {
-      control: "radio",
-      options: [PaymasterMode.SPONSORED, PaymasterMode.ERC20],
-    },
-  },
 };
 
-export const WithdrawHook = (args: WithdrawHookArgs) => {
+export const WithdrawHook = (args: HookArgs) => {
   return <Withdraw {...args} />;
 };
 

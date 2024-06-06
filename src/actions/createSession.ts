@@ -9,7 +9,7 @@ export const createSession = async (
     throw new Error("No smart account found!");
   }
 
-  const { policy: policyWithoutSessionKey, chain, buildUseropDto } = params;
+  const { policy: policyWithoutSessionKey, chain, options } = params;
 
   const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(smartAccountClient, chain);
 
@@ -23,7 +23,7 @@ export const createSession = async (
     smartAccountClient,
     policy,
     sessionStorageClient,
-    buildUseropDto
+    options
   )
 
 };

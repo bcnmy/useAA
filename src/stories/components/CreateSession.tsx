@@ -40,7 +40,7 @@ const CreateSessionComponent = ({wait}: HookArgs) => {
 
   const handleCreateSession = () => {
     mutate({
-      buildUseropDto: Sponsored,
+      options: Sponsored,
       policy
     });
   };

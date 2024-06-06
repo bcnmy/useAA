@@ -1,18 +1,28 @@
 import { BuildUserOpOptions, PaymasterMode } from "@biconomy/account";
 
-export const deepMerge = (target: any = {}, source: any = {}) => {
+export type PartialBuildOptions = Partial<BuildUserOpOptions> | undefined;
+export type PartialBuildOptionKey = keyof BuildUserOpOptions;
+
+export const deepMerge = (target: PartialBuildOptions = {}, source: PartialBuildOptions = {}): PartialBuildOptions => {
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
-            if (isObject(source[key])) {
-                if (!target[key]) Object.assign(target, { [key]: {} });
-                deepMerge(target[key], source[key]);
+            const typedKey = key as PartialBuildOptionKey;
+            const sourceAsObject = source as PartialBuildOptions;
+            if (isObject(sourceAsObject?.[typedKey])) {
+                if (!target[typedKey]) Object.assign(target, { [typedKey]: {} });
+                const typedTarget = target[typedKey] as PartialBuildOptions;
+                const typedSource = sourceAsObject?.[typedKey] as PartialBuildOptions;
+                deepMerge(typedTarget, typedSource);
             } else {
-                Object.assign(target, { [key]: source[key] });
+                Object.assign(target, { [key]: sourceAsObject?.[typedKey] });
             }
         }
     }
+    else if (isObject(target) && Array.isArray(source)) {
+        source.forEach((item) => deepMerge(target, item));
+    }
     else {
-        throw new Error('deepMerge only accepts objects as arguments');
+        throw new Error('deepMerge: source and target must be objects');
     }
     return target;
 }
@@ -21,10 +31,11 @@ const isObject = (item: any) => {
     return item && typeof item === 'object' && !Array.isArray(item);
 }
 
-export const mergeArray = (target: any = {}, source: any[] = []) => source.reduce((acc: any, item: any) => deepMerge(acc, item), target);
+export const _mergeOptions = (target: PartialBuildOptions = {}, source: PartialBuildOptions[] = []): PartialBuildOptions => source.reduce((acc: PartialBuildOptions, item: PartialBuildOptions) => deepMerge(acc, item), target);
+export const mergeOptions = (options: PartialBuildOptions): PartialBuildOptions => Array.isArray(options) ? _mergeOptions({}, options.filter(Boolean)) : options ?? {};
 
 export type TSponsored = typeof Sponsored;
-export const Sponsored: Partial<BuildUserOpOptions> = {
+export const Sponsored: PartialBuildOptions = {
     paymasterServiceData: {
         mode: PaymasterMode.SPONSORED,
         calculateGasLimits: true
@@ -32,7 +43,7 @@ export const Sponsored: Partial<BuildUserOpOptions> = {
 }
 
 export type TGasTokenPayment = typeof GasTokenPayment;
-export const GasTokenPayment: Partial<BuildUserOpOptions> = {
+export const GasTokenPayment: PartialBuildOptions = {
     paymasterServiceData: {
         mode: PaymasterMode.ERC20,
         calculateGasLimits: true,
@@ -40,7 +51,7 @@ export const GasTokenPayment: Partial<BuildUserOpOptions> = {
 }
 
 export type TNowNonce = ReturnType<typeof getNowNonce>;
-export const getNowNonce: () => Partial<BuildUserOpOptions> =
+export const getNowNonce: () => PartialBuildOptions =
     () => ({
         nonceOptions: {
             nonceKey: Date.now()

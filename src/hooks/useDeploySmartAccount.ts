@@ -1,10 +1,11 @@
-import { BuildUserOpOptions, UserOpResponse } from "@biconomy/account";
+import { UserOpResponse } from "@biconomy/account";
 import { useMutation } from "@tanstack/react-query";
 import { useSmartAccount } from "@/hooks";
 import { MutationOptionsWithoutMutationFn } from "@/types";
+import { PartialBuildOptions } from "@/utils";
 
 type UseDeploySmartAccountArgs = {
-  buildUseropDto?: BuildUserOpOptions;
+  options?: PartialBuildOptions;
 };
 
 export const useDeploySmartAccount = (
@@ -21,8 +22,8 @@ export const useDeploySmartAccount = (
           throw new Error("No smart account found");
         }
 
-        if (variables?.buildUseropDto) {
-          return smartAccountClient.deploy(variables.buildUseropDto);
+        if (variables?.options) {
+          return smartAccountClient.deploy(variables.options);
         }
         return smartAccountClient.deploy();
       },

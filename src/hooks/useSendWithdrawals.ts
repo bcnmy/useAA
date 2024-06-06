@@ -9,7 +9,7 @@ import { useSmartAccount } from "@/hooks";
 import { MutationOptionsWithoutMutationFn } from "@/types";
 
 type UseSendWithdrawalsArgs = {
-  buildUseropDto?: BuildUserOpOptions;
+  options?: BuildUserOpOptions;
   withdrawalRequests?: WithdrawalRequest[] | null;
 };
 
@@ -28,12 +28,12 @@ export const useSendWithdrawals = (
         if (!smartAccountClient) {
           throw new Error("No smart account found");
         }
-        const { withdrawalRequests, buildUseropDto } = variables;
+        const { withdrawalRequests, options } = variables;
 
         return smartAccountClient.withdraw(
           withdrawalRequests,
           defaultAddress,
-          buildUseropDto
+          options
         );
       },
       ...mutationArgs,

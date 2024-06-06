@@ -1,5 +1,5 @@
 import { BiconomySmartAccountV2 } from "@biconomy/account";
-import { GasTokenPayment, mergeArray } from "@/utils";
+import { GasTokenPayment, mergeOptions } from "@/utils";
 import { UseSendGasTokenTransactionArgs } from "@/hooks/useSendGasTokenTransaction";
 
 export const sendGasTokenTransaction = async (
@@ -11,12 +11,12 @@ export const sendGasTokenTransaction = async (
     throw new Error("No smart account found!");
   }
 
-  const buildUseropDto =
-    mergeArray(params.buildUseropDto, [GasTokenPayment])
+  const options =
+    mergeOptions([params.options, GasTokenPayment])
 
   const result = await smartAccountClient.sendTransaction(
-    params.manyOrOneTransactions,
-    buildUseropDto
+    params.transactions,
+    options
   );
   return result;
 };

@@ -43,8 +43,8 @@ const UseBatchSessionComponent = ({wait}:HookArgs) => {
     const correspondingIndexes = [1, 0] // The order of the txs from the sessionBatch
 
     mutate({
-      buildUseropDto: Sponsored,
-      manyOrOneTx: txs,
+      options: Sponsored,
+      transactions: txs,
       correspondingIndexes
     });
   };

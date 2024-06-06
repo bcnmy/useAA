@@ -19,7 +19,7 @@ const SendTransactionComponent = (params: HookArgs) => {
       value: etherValue,
     };
 
-    mutate({ manyOrOneTransactions: tx });
+    mutate({ transactions: tx });
   };
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const SendSponsoredTransactionComponent = ({wait}: HookArgs) => {
       value: etherValue,
     };
 
-    mutate({ manyOrOneTransactions: tx });
+    mutate({ transactions: tx });
   };
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const SendGasTokenTransactionComponent = ({wait}: HookArgs) => {
     };
 
     mutate({
-      manyOrOneTransactions: tx,
+      transactions: tx,
       preferredToken: "0x747A4168DB14F57871fa8cda8B5455D8C2a8e90a",
     });
   };
