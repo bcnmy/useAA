@@ -32,7 +32,7 @@ const isObject = (item: any) => {
 }
 
 export const _mergeOptions = (target: PartialBuildOptions = {}, source: PartialBuildOptions[] = []): PartialBuildOptions => source.reduce((acc: PartialBuildOptions, item: PartialBuildOptions) => deepMerge(acc, item), target);
-export const mergeOptions = (options: PartialBuildOptions): PartialBuildOptions => Array.isArray(options) ? _mergeOptions({}, options.filter(Boolean)) : options ?? {};
+export const mergeOptions = (options: PartialBuildOptions[] | PartialBuildOptions): PartialBuildOptions => Array.isArray(options) ? _mergeOptions({}, options.filter(Boolean)) : options ?? {};
 
 export type TSponsored = typeof Sponsored;
 export const Sponsored: PartialBuildOptions = {
