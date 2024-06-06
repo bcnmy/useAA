@@ -1,9 +1,9 @@
-import type { PartialBuildOptions } from "@/utils"
+import type { PartialOptions } from "@/utils"
 import type { BiconomySmartAccountV2, Transaction } from "@biconomy/account"
 
 export type UseSendSponsoredTransactionArgs = {
   transactions: Transaction | Transaction[]
-  options?: PartialBuildOptions
+  options?: PartialOptions
 }
 
 export const sendSponsoredTransaction = async (

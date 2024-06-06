@@ -6,11 +6,11 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 const TokenFeesComponent = (params: TokenFeesHookArgs) => {
   const { paymasterMode, to, value } = params
   const { isPending, isError, error, isSuccess, data } = useTokenFees({
-    manyOrOneTransactions: {
+    transactions: {
       to,
       value
     },
-    buildUseropDto: {
+    options: {
       paymasterServiceData: { mode: paymasterMode }
     }
   })

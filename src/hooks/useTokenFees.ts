@@ -1,6 +1,6 @@
 import { useSmartAccount } from "@/hooks"
+import type { PartialOptions } from "@/utils"
 import type {
-  BuildUserOpOptions,
   FeeQuotesOrDataResponse,
   Transaction
 } from "@biconomy/account"
@@ -12,22 +12,22 @@ import {
 import type { UseQueryParameters } from "wagmi/query"
 
 type UseTokenFeesPayload = {
-  manyOrOneTransactions: Transaction | Transaction[]
-  buildUseropDto: BuildUserOpOptions
+  transactions: Transaction | Transaction[]
+  options: PartialOptions
 }
 
 export const useTokenFees = (
   args: UseQueryParameters & UseTokenFeesPayload
 ) => {
   const { smartAccountClient, queryClient } = useSmartAccount()
-  const { manyOrOneTransactions, buildUseropDto } = args
+  const { transactions, options, ...rest } = args
 
   return useQuery(
     {
       queryKey: [
         "feeQuotesOrDataResponse",
-        manyOrOneTransactions,
-        buildUseropDto
+        transactions,
+        options
       ],
       queryFn: async () => {
         if (!smartAccountClient) {
@@ -35,12 +35,12 @@ export const useTokenFees = (
         }
 
         return await smartAccountClient.getTokenFees(
-          manyOrOneTransactions,
-          buildUseropDto
+          transactions,
+          options ?? {}
         )
       },
-      enabled: !!manyOrOneTransactions && !!buildUseropDto,
-      ...args
+      enabled: !!transactions && !!options,
+      ...rest
     } as UseQueryOptions<
       FeeQuotesOrDataResponse,
       Error,

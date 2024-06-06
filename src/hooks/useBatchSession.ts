@@ -2,14 +2,14 @@ import { useBatchSessionAction } from "@/actions"
 import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
-import { type PartialBuildOptions, getNowNonce, mergeOptions } from "@/utils"
+import { type PartialOptions, getNowNonce, mergeOptions } from "@/utils"
 import { type Transaction, getChain } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import type { Chain, Hex } from "viem"
 import { useChainId } from "wagmi"
 
 export type CoreUseBatchSessionArgs = {
-  options?: PartialBuildOptions
+  options?: PartialOptions
   transactions: Transaction | Transaction[]
   correspondingIndexes: number[]
 }
