@@ -1,16 +1,17 @@
-import { Transaction, UserOpResponse } from "@biconomy/account";
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import { MutationOptionsWithoutMutationFn } from "@/types";
-import { PartialBuildOptions, mergeOptions } from "@/utils";
-
+import { useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/types"
+import { type PartialBuildOptions, mergeOptions } from "@/utils"
+import type { Transaction, UserOpResponse } from "@biconomy/account"
+import { useMutation } from "@tanstack/react-query"
 
 type UseSendTransactionArgs = {
   transactions: Transaction | Transaction[]
   options?: PartialBuildOptions
 }
 
-export const useSendTransaction = (mutationArgs?: MutationOptionsWithoutMutationFn) => {
+export const useSendTransaction = (
+  mutationArgs?: MutationOptionsWithoutMutationFn
+) => {
   const { smartAccountClient, queryClient } = useSmartAccount()
 
   const useSendTransactionMutation = useMutation(
@@ -21,7 +22,7 @@ export const useSendTransaction = (mutationArgs?: MutationOptionsWithoutMutation
         if (!smartAccountClient) {
           throw new Error("No smart account found")
         }
-        const { transactions, options } = variables;
+        const { transactions, options } = variables
 
         return smartAccountClient.sendTransaction(
           transactions,

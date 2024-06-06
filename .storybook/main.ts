@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite"
-import { mergeConfig } from "vite"
 import { config as dotenvConfig } from "dotenv"
+import { mergeConfig } from "vite"
 
 dotenvConfig()
 

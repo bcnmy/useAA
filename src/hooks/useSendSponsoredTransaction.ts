@@ -1,29 +1,25 @@
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import { sendSponsoredTransaction } from "@/actions";
-import {
+import { sendSponsoredTransaction } from "@/actions"
+import { useSmartAccount } from "@/hooks"
+import type {
   MutationOptionsWithoutMutationFn,
-  UseSendSponsoredTransactionArgs,
-} from "@/types";
+  UseSendSponsoredTransactionArgs
+} from "@/types"
+import { useMutation } from "@tanstack/react-query"
 
 export const useSendSponsoredTransaction = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient, queryClient } = useSmartAccount();
-
+  const { smartAccountClient, queryClient } = useSmartAccount()
 
   const useSendSponsoredTransactionMutation = useMutation(
     {
       mutationFn: (params: UseSendSponsoredTransactionArgs) => {
-        return sendSponsoredTransaction(
-          params,
-          smartAccountClient
-        );
+        return sendSponsoredTransaction(params, smartAccountClient)
       },
-      ...mutationArgs,
+      ...mutationArgs
     },
     queryClient
-  );
+  )
 
-  return useSendSponsoredTransactionMutation;
-};
+  return useSendSponsoredTransactionMutation
+}

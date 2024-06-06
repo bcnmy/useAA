@@ -1,4 +1,4 @@
-export * from "@/hooks";
-export * from "@/utils";
+export * from "@/hooks"
+export * from "@/utils"
 
-export { BiconomyProvider } from "@/providers";
+export { BiconomyProvider } from "@/providers"

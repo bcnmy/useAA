@@ -1,35 +1,30 @@
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import {
-  MutationOptionsWithoutMutationFn,
-} from "@/types";
-import { sendGasTokenTransaction } from "@/actions/sendGasTokenTransaction";
-import { Hex, Transaction } from "@biconomy/account";
-import { PartialBuildOptions } from "@/utils";
+import { sendGasTokenTransaction } from "@/actions/sendGasTokenTransaction"
+import { useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/types"
+import type { PartialBuildOptions } from "@/utils"
+import type { Hex, Transaction } from "@biconomy/account"
+import { useMutation } from "@tanstack/react-query"
 
 export type UseSendGasTokenTransactionArgs = {
-  transactions: Transaction | Transaction[];
-  preferredToken: Hex;
-  options?: PartialBuildOptions;
-};
+  transactions: Transaction | Transaction[]
+  preferredToken: Hex
+  options?: PartialBuildOptions
+}
 
 export const useSendGasTokenTransaction = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { queryClient, smartAccountClient } = useSmartAccount();
+  const { queryClient, smartAccountClient } = useSmartAccount()
 
   const useSendGasTokenTransactionMutation = useMutation(
     {
       mutationFn: (params: UseSendGasTokenTransactionArgs) => {
-        return sendGasTokenTransaction(
-          params,
-          smartAccountClient
-        );
+        return sendGasTokenTransaction(params, smartAccountClient)
       },
-      ...mutationArgs,
+      ...mutationArgs
     },
     queryClient
-  );
+  )
 
-  return useSendGasTokenTransactionMutation;
-};
+  return useSendGasTokenTransactionMutation
+}

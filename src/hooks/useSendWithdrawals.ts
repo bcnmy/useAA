@@ -1,24 +1,24 @@
-import {
+import { useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/types"
+import type {
   BuildUserOpOptions,
   UserOpResponse,
-  WithdrawalRequest,
-} from "@biconomy/account";
-import { useWalletClient } from "wagmi";
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import { MutationOptionsWithoutMutationFn } from "@/types";
+  WithdrawalRequest
+} from "@biconomy/account"
+import { useMutation } from "@tanstack/react-query"
+import { useWalletClient } from "wagmi"
 
 type UseSendWithdrawalsArgs = {
-  options?: BuildUserOpOptions;
-  withdrawalRequests?: WithdrawalRequest[] | null;
-};
+  options?: BuildUserOpOptions
+  withdrawalRequests?: WithdrawalRequest[] | null
+}
 
 export const useSendWithdrawals = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient, queryClient } = useSmartAccount();
-  const { data: signer } = useWalletClient();
-  const defaultAddress = signer?.account.address ?? null;
+  const { smartAccountClient, queryClient } = useSmartAccount()
+  const { data: signer } = useWalletClient()
+  const defaultAddress = signer?.account.address ?? null
 
   const useSendWithdrawalsMutation = useMutation(
     {
@@ -26,20 +26,20 @@ export const useSendWithdrawals = (
         variables: UseSendWithdrawalsArgs
       ): Promise<UserOpResponse> => {
         if (!smartAccountClient) {
-          throw new Error("No smart account found");
+          throw new Error("No smart account found")
         }
-        const { withdrawalRequests, options } = variables;
+        const { withdrawalRequests, options } = variables
 
         return smartAccountClient.withdraw(
           withdrawalRequests,
           defaultAddress,
           options
-        );
+        )
       },
-      ...mutationArgs,
+      ...mutationArgs
     },
     queryClient
-  );
+  )
 
-  return useSendWithdrawalsMutation;
-};
+  return useSendWithdrawalsMutation
+}

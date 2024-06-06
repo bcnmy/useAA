@@ -1,1 +1,1 @@
-export { BiconomyProvider } from "@/providers/BiconomyProvider";
+export { BiconomyProvider } from "@/providers/BiconomyProvider"

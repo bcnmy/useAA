@@ -8,8 +8,7 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": "warn",
-        "noUnsafeOptionalChaining": "warn"
+        "noExplicitAny": "warn"
       },
       "style": {
         "noUnusedTemplateLiteral": "warn"
@@ -25,6 +24,7 @@
   },
   "files": {
     "ignore": [
+      "vite.config.ts",
       "node_modules",
       "**/node_modules",
       "cache",

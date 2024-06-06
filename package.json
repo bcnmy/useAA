@@ -11,14 +11,17 @@
     "clean": "rimraf ./dist/_esm ./dist/_types ./dist/tsconfig",
     "build:esm": "tsc --project ./tsconfig.esm.json && tsc-alias -p ./tsconfig.esm.json && echo > ./dist/_esm/package.json '{\"type\": \"module\",\"sideEffects\":false}'",
     "build:types": "tsc --project ./tsconfig.types.json && tsc-alias -p ./tsconfig.types.json",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "esm:watch": "tsc --project ./tsconfig.esm.json --watch",
     "esm:watch:aliases": "tsc-alias -p ./tsconfig.esm.json --watch",
     "changeset": "changeset",
     "changeset:release": "bun run build && changeset publish",
-    "changeset:version": "changeset version && bun install --lockfile-only"
+    "changeset:version": "changeset version && bun install --lockfile-only",
+    "size": "size-limit",
+    "format": "biome format . --write",
+    "lint": "biome check .",
+    "lint:fix": "bun run lint --apply"
   },
   "exports": {
     ".": {
@@ -59,7 +62,10 @@
     "tsc-alias": "^1.8.8",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
-    "vitest": "^1.2.2"
+    "vitest": "^1.2.2",
+    "@size-limit/esbuild-why": "^11",
+    "@size-limit/preset-small-lib": "^11",
+    "size-limit": "^11"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.18.1",
