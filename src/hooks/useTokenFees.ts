@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-query"
 import type { UseQueryParameters } from "wagmi/query"
 
-type UseTokenFeesPayload = {
+export type UseTokenFeesPayload = {
   transactions: Transaction | Transaction[]
   options: PartialOptions
 }
