@@ -1,49 +1,45 @@
-import { getChain } from "@biconomy/account";
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import {
-  MutationOptionsWithoutMutationFn,
-} from "@/types";
-import { useChainId } from "wagmi";
-import { Chain } from "viem";
-import { createBatchSession } from "@/actions/createBatchSession";
-import { Policy } from "./useCreateSession";
-import { PartialBuildOptions } from "..";
+import { createBatchSession } from "@/actions/createBatchSession"
+import { useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
+import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account"
+import { useMutation } from "@tanstack/react-query"
+import type { Chain } from "viem"
+import { useChainId } from "wagmi"
+import type { PartialBuildOptions } from ".."
+
+export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
 export type CoreUseCreateBatchSessionArgs = {
-  policy: Policy[];
-  options?: PartialBuildOptions;
-};
-export type PostUseCreateSessionArgs = CoreUseCreateBatchSessionArgs & {
-  chain: Chain;
-};
+  policy: Policy[]
+  options?: PartialBuildOptions
+}
+export type PostUseCreateSessionBatchArgs = CoreUseCreateBatchSessionArgs & {
+  chain: Chain
+}
 
 export const useCreateBatchSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient, queryClient } = useSmartAccount();
-  const chainId = useChainId();
+  const { smartAccountClient, queryClient } = useSmartAccount()
+  const chainId = useChainId()
 
   const useCreateSessionMutation = useMutation(
     {
       mutationFn: (_params: CoreUseCreateBatchSessionArgs) => {
-        if (!smartAccountClient) throw new Error("No smart account found");
-        const chain = getChain(chainId);
+        if (!smartAccountClient) throw new Error("No smart account found")
+        const chain = getChain(chainId)
 
-        const params: PostUseCreateSessionArgs = {
+        const params: PostUseCreateSessionBatchArgs = {
           ..._params,
-          chain,
-        };
+          chain
+        }
 
-        return createBatchSession(
-          params,
-          smartAccountClient
-        );
+        return createBatchSession(params, smartAccountClient)
       },
-      ...mutationArgs,
+      ...mutationArgs
     },
     queryClient
-  );
+  )
 
-  return useCreateSessionMutation;
-};
+  return useCreateSessionMutation
+}

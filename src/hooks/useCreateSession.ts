@@ -1,49 +1,43 @@
-import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account";
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import { createSession } from "@/actions";
-import {
-  MutationOptionsWithoutMutationFn,
-} from "@/types";
-import { useChainId } from "wagmi";
-import { Chain } from "viem";
-import { PartialBuildOptions } from "..";
+import { createSession } from "@/actions"
+import { type Policy, useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
+
+import type { PartialBuildOptions } from "@/utils"
+import { getChain } from "@biconomy/account"
+import { useMutation } from "@tanstack/react-query"
+import type { Chain } from "viem"
+import { useChainId } from "wagmi"
 
 export type CoreUseCreateSessionArgs = {
-  policy: Policy[];
-  options?: PartialBuildOptions;
-};
+  policy: Policy[]
+  options?: PartialBuildOptions
+}
 export type PostUseCreateSessionArgs = CoreUseCreateSessionArgs & {
-  chain: Chain;
-};
-export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
-
+  chain: Chain
+}
 export const useCreateSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient, queryClient } = useSmartAccount();
-  const chainId = useChainId();
+  const { smartAccountClient, queryClient } = useSmartAccount()
+  const chainId = useChainId()
 
   const useCreateSessionMutation = useMutation(
     {
       mutationFn: (_params: CoreUseCreateSessionArgs) => {
-        if (!smartAccountClient) throw new Error("No smart account found");
-        const chain = getChain(chainId);
+        if (!smartAccountClient) throw new Error("No smart account found")
+        const chain = getChain(chainId)
 
         const params: PostUseCreateSessionArgs = {
           ..._params,
-          chain,
-        };
+          chain
+        }
 
-        return createSession(
-          params,
-          smartAccountClient
-        );
+        return createSession(params, smartAccountClient)
       },
-      ...mutationArgs,
+      ...mutationArgs
     },
     queryClient
-  );
+  )
 
-  return useCreateSessionMutation;
-};
+  return useCreateSessionMutation
+}

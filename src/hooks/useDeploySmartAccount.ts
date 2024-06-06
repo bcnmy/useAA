@@ -1,17 +1,18 @@
-import { UserOpResponse } from "@biconomy/account";
-import { useMutation } from "@tanstack/react-query";
-import { useSmartAccount } from "@/hooks";
-import { MutationOptionsWithoutMutationFn } from "@/types";
-import { PartialBuildOptions } from "@/utils";
+import { useSmartAccount } from "@/hooks"
+import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
-type UseDeploySmartAccountArgs = {
-  options?: PartialBuildOptions;
-};
+import type { PartialBuildOptions } from "@/utils"
+import type { UserOpResponse } from "@biconomy/account"
+import { useMutation } from "@tanstack/react-query"
+
+export type UseDeploySmartAccountArgs = {
+  options?: PartialBuildOptions
+}
 
 export const useDeploySmartAccount = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { smartAccountClient, queryClient } = useSmartAccount();
+  const { smartAccountClient, queryClient } = useSmartAccount()
 
   const useDeploySmartAccountMutation = useMutation(
     {
@@ -19,18 +20,18 @@ export const useDeploySmartAccount = (
         variables: UseDeploySmartAccountArgs
       ): Promise<UserOpResponse> => {
         if (!smartAccountClient) {
-          throw new Error("No smart account found");
+          throw new Error("No smart account found")
         }
 
         if (variables?.options) {
-          return smartAccountClient.deploy(variables.options);
+          return smartAccountClient.deploy(variables.options)
         }
-        return smartAccountClient.deploy();
+        return smartAccountClient.deploy()
       },
-      ...mutationArgs,
+      ...mutationArgs
     },
     queryClient
-  );
+  )
 
-  return useDeploySmartAccountMutation;
-};
+  return useDeploySmartAccountMutation
+}
