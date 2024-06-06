@@ -6,12 +6,12 @@ import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import type { Chain } from "viem"
 import { useChainId } from "wagmi"
-import type { PartialBuildOptions } from ".."
+import type { PartialOptions } from ".."
 
 export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
 export type CoreUseCreateBatchSessionArgs = {
   policy: Policy[]
-  options?: PartialBuildOptions
+  options?: PartialOptions
 }
 export type PostUseCreateSessionBatchArgs = CoreUseCreateBatchSessionArgs & {
   chain: Chain
