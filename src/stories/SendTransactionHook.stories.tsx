@@ -1,28 +1,27 @@
 import {
   SendGasTokenTransaction,
   SendSponsoredTransaction,
-  SendTransaction,
-} from "@/stories/components/SendTransaction";
-import { HookArgs } from "@/stories/utils/types";
+  SendTransaction
+} from "@/stories/components/SendTransaction"
+import type { HookArgs } from "@/stories/utils/types"
 
 export default {
   title: "Send Transaction",
-  component: SendTransaction,
-};
-
+  component: SendTransaction
+}
 
 export const SendTransactionHook = (args: HookArgs) => {
-  return <SendTransaction {...args} />;
-};
+  return <SendTransaction {...args} />
+}
 
 SendTransactionHook.args = {
-  wait: true,
-};
+  wait: true
+}
 
 export const SendSponsoredTransactionHook = (params: HookArgs) => {
-  return <SendSponsoredTransaction {...params}/>;
-};
+  return <SendSponsoredTransaction {...params} />
+}
 
 export const SendGasTokenTransactionHook = (params: HookArgs) => {
-  return <SendGasTokenTransaction {...params} />;
+  return <SendGasTokenTransaction {...params} />
 }

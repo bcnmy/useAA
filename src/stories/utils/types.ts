@@ -1,4 +1,3 @@
 export type HookArgs = {
-  wait: boolean;
-};
-
+  wait: boolean
+}

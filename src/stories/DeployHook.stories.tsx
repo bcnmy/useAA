@@ -1,15 +1,15 @@
-import { DeploySmartAccount } from "@/stories/components/DeploySmartAccount";
-import { HookArgs } from "@/stories/utils/types";
+import { DeploySmartAccount } from "@/stories/components/DeploySmartAccount"
+import type { HookArgs } from "@/stories/utils/types"
 
 export default {
   title: "Deploy",
-  component: DeploySmartAccount,
-};
+  component: DeploySmartAccount
+}
 
 export const DeployHook = (args: HookArgs) => {
-  return <DeploySmartAccount {...args} />;
-};
+  return <DeploySmartAccount {...args} />
+}
 
 DeployHook.args = {
-  wait: true,
-};
+  wait: true
+}
