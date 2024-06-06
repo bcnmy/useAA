@@ -20,7 +20,7 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: Set remote url
-        run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/bcnmy/biconomy-client-sdk.git
+        run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/bcnmy/useAA.git
 
       - name: Run the tests
         run: bun run docs:deploy
