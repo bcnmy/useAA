@@ -1,19 +1,19 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useTokenFees } from "@/hooks";
-import { Providers } from "@/stories/components/Providers";
-import { TokenFeesHookArgs } from "@/stories/utils/types";
+import { useTokenFees } from "@/hooks"
+import { Providers } from "@/stories/components/Providers"
+import type { TokenFeesHookArgs } from "@/stories/utils/types"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const TokenFeesComponent = (params: TokenFeesHookArgs) => {
-  const { paymasterMode, to, value } = params;
+  const { paymasterMode, to, value } = params
   const { isPending, isError, error, isSuccess, data } = useTokenFees({
     manyOrOneTransactions: {
       to,
-      value,
+      value
     },
     buildUseropDto: {
-      paymasterServiceData: { mode: paymasterMode },
-    },
-  });
+      paymasterServiceData: { mode: paymasterMode }
+    }
+  })
 
   return (
     <div>
@@ -22,13 +22,13 @@ const TokenFeesComponent = (params: TokenFeesHookArgs) => {
       {isError && <span>{error?.message}</span>}
       {isSuccess && <span>Success!</span>}
     </div>
-  );
-};
+  )
+}
 
 export const TokenFees = (params: TokenFeesHookArgs) => {
   return (
     <Providers>
       <TokenFeesComponent {...params} />
     </Providers>
-  );
-};
+  )
+}

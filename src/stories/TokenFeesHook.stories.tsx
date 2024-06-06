@@ -1,6 +1,6 @@
-import { TokenFees } from "@/stories/components/TokenFees";
-import { PaymasterMode } from "@biconomy/account";
-import { TokenFeesHookArgs } from "@/stories/utils/types";
+import { TokenFees } from "@/stories/components/TokenFees"
+import type { TokenFeesHookArgs } from "@/stories/utils/types"
+import { PaymasterMode } from "@biconomy/account"
 
 export default {
   title: "TokenFees",
@@ -8,23 +8,23 @@ export default {
   argTypes: {
     paymasterMode: {
       control: "radio",
-      options: [PaymasterMode.SPONSORED, PaymasterMode.ERC20],
+      options: [PaymasterMode.SPONSORED, PaymasterMode.ERC20]
     },
     to: {
-      type: "string",
+      type: "string"
     },
     value: {
-      type: "number",
-    },
-  },
-};
+      type: "number"
+    }
+  }
+}
 
 export const TokenFeesHook = (args: TokenFeesHookArgs) => {
-  return <TokenFees {...args} />;
-};
+  return <TokenFees {...args} />
+}
 
 TokenFeesHook.args = {
   paymasterMode: PaymasterMode.ERC20,
   to: "0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC",
-  value: 1,
-};
+  value: 1
+}
