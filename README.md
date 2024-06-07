@@ -13,11 +13,16 @@ bun add react react-dom viem wagmi @tanstack/react-query @biconomy/account @bico
 ```
 
 ## Documentation
-[view docs](https://bcnmy.github.io/useAA)
+[API Docs](https://bcnmy.github.io/useAA)
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details
+
+## Example
+
+- [Github](https://github.com/bcnmy/sdk-demo/tree/dev)
+- [App](https://sdk-dev.biconomy.io)
 
 ## Connect with Biconomy 🍊
 
