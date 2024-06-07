@@ -4,12 +4,12 @@ import {
   useSendTransaction
 } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import type { HookArgs } from "@/stories/utils/types"
+import type { HookProps } from "@/stories/utils/types"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import React, { useEffect } from "react"
 import { parseEther } from "viem"
 
-const SendTransactionComponent = (params: HookArgs) => {
+const SendTransactionComponent = (params: HookProps) => {
   const [value, setValue] = React.useState("")
   const [address, setAddress] = React.useState(
     "0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC"
@@ -67,7 +67,7 @@ const SendTransactionComponent = (params: HookArgs) => {
   )
 }
 
-const SendSponsoredTransactionComponent = ({ wait }: HookArgs) => {
+const SendSponsoredTransactionComponent = ({ wait }: HookProps) => {
   const [value, setValue] = React.useState("")
   const [address, setAddress] = React.useState(
     "0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC"
@@ -129,7 +129,7 @@ const SendSponsoredTransactionComponent = ({ wait }: HookArgs) => {
   )
 }
 
-const SendGasTokenTransactionComponent = ({ wait }: HookArgs) => {
+const SendGasTokenTransactionComponent = ({ wait }: HookProps) => {
   const [value, setValue] = React.useState("")
   const [address, setAddress] = React.useState(
     "0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC"
@@ -194,7 +194,7 @@ const SendGasTokenTransactionComponent = ({ wait }: HookArgs) => {
   )
 }
 
-export const SendGasTokenTransaction = (params: HookArgs) => {
+export const SendGasTokenTransaction = (params: HookProps) => {
   return (
     <Providers>
       <SendGasTokenTransactionComponent {...params} />
@@ -202,7 +202,7 @@ export const SendGasTokenTransaction = (params: HookArgs) => {
   )
 }
 
-export const SendTransaction = (params: HookArgs) => {
+export const SendTransaction = (params: HookProps) => {
   return (
     <Providers>
       <SendTransactionComponent {...params} />
@@ -210,7 +210,7 @@ export const SendTransaction = (params: HookArgs) => {
   )
 }
 
-export const SendSponsoredTransaction = (params: HookArgs) => {
+export const SendSponsoredTransaction = (params: HookProps) => {
   return (
     <Providers>
       <SendSponsoredTransactionComponent {...params} />

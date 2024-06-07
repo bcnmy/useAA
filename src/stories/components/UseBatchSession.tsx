@@ -4,9 +4,9 @@ import { Sponsored } from "@/utils"
 import type { Transaction } from "@biconomy/account"
 import React from "react"
 import { encodeFunctionData, parseAbi } from "viem"
-import type { HookArgs } from "../utils/types"
+import type { HookProps } from "../utils/types"
 
-export type PreUseUseBatchSessionArgs = {
+export type PreUseUseBatchSessionProps = {
   chainId: number
 }
 
@@ -14,7 +14,7 @@ export const contractAddress = "0xC834b3804817883a6b7072e815C3faf8682bFA13"
 const order = parseAbi(["function submitOrder(uint256 _orderNum)"])
 const cancel = parseAbi(["function submitCancel(uint256 _orderNum)"])
 
-const UseBatchSessionComponent = ({ wait }: HookArgs) => {
+const UseBatchSessionComponent = ({ wait }: HookProps) => {
   const { mutate, isPending, isError, error, isSuccess, data } =
     useBatchSession()
   const [txHash, setTxHash] = React.useState("")
@@ -78,7 +78,7 @@ const UseBatchSessionComponent = ({ wait }: HookArgs) => {
   )
 }
 
-export const UseBatchSession = (params: HookArgs) => {
+export const UseBatchSession = (params: HookProps) => {
   return (
     <Providers>
       <UseBatchSessionComponent {...params} />

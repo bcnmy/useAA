@@ -3,40 +3,119 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account"
-import { useMutation } from "@tanstack/react-query"
+import { type UseMutationResult, useMutation } from "@tanstack/react-query"
 import type { Chain } from "viem"
 import { useChainId } from "wagmi"
-import type { PartialOptions } from ".."
+import type { BuildUserOpOptions, UserOpResponse } from "@/utils"
 
+export { type Policy as PolicyFromSDK } from "@biconomy/account"
 export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
-export type CoreUseCreateBatchSessionArgs = {
+export type UseCreateBatchSessionProps = {
+  /** The array of policy elements to be applied to the session. */
   policy: Policy[]
-  options?: PartialOptions
+  /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
+  options?: BuildUserOpOptions
 }
-export type PostUseCreateSessionBatchArgs = CoreUseCreateBatchSessionArgs & {
+export type PostUseCreateSessionBatchProps = UseCreateBatchSessionProps & {
   chain: Chain
 }
+/**
+ 
+@description Creates a sessions to be used when submitting batches of txs simultaneously in the context of a users smart account.
 
+Mutation function args: {@link UseCreateBatchSessionProps}
+
+@example
+
+```tsx
+
+import { useCreateBatchSession, useUserOpWait, Options } from "@biconomy/useAA"
+import { polygonAmoy } from "viem/chains"
+import { encodeFunctionData, parseAbi } from "wagmi"
+
+export const CreateBatchSession = ({userSmartAccountAddress}) => {
+
+  const leafPolicy: Policy = {
+    interval: {
+      validUntil: 0,
+      validAfter: 0,
+    },
+    contractAddress: "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e",
+    functionSelector: "safeMint(address)",
+    rules: [
+      {
+        offset: 0,
+        condition: 0,
+        referenceValue: userSmartAccountAddress,
+      },
+    ],
+    valueLimit: 0n,
+  }
+
+  const policyLeaves: Policy[] = [leafPolicy, leafPolicy];
+
+  const {
+    mutate,
+    data: userOpResponse,
+    error,
+    isPending,
+  } = useCreateBatchSession();
+
+  const {
+    isLoading: waitIsLoading,
+    isSuccess: waitIsSuccess,
+    error: waitError,
+    data: waitData,
+  } = useUserOpWait(userOpResponse);
+
+  const grantPermission = () =>
+    mutate({
+      policy: policyLeaves,
+      options: Options.Sponsored,
+    });
+
+  useEffect(() => {
+    if (waitIsSuccess && waitData?.success === "true") {
+      console.log(
+        "Successful mint: " +
+          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
+      );
+    }
+  }, [waitIsSuccess]);
+
+  return (
+    <ErrorGuard errors={[error, waitError]}>
+      <Button
+        title="Grant Permission"
+        onClickFunc={grantPermission}
+        isLoading={isPending || waitIsLoading}
+      />
+    </ErrorGuard>
+  );
+};
+
+```
+*/
 export const useCreateBatchSession = (
-  mutationArgs?: MutationOptionsWithoutMutationFn
-) => {
+  mutationProps?: MutationOptionsWithoutMutationFn
+): UseMutationResult<UserOpResponse, Error, UseCreateBatchSessionProps> => {
   const { smartAccountClient, queryClient } = useSmartAccount()
   const chainId = useChainId()
 
   const useCreateSessionMutation = useMutation(
     {
-      mutationFn: (_params: CoreUseCreateBatchSessionArgs) => {
+      mutationFn: (_params: UseCreateBatchSessionProps) => {
         if (!smartAccountClient) throw new Error("No smart account found")
         const chain = getChain(chainId)
 
-        const params: PostUseCreateSessionBatchArgs = {
+        const params: PostUseCreateSessionBatchProps = {
           ..._params,
           chain
         }
 
         return createBatchSession(params, smartAccountClient)
       },
-      ...mutationArgs
+      ...mutationProps
     },
     queryClient
   )

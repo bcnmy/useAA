@@ -2,9 +2,9 @@ import { useCreateBatchSession, useUserOpWait } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import { Sponsored, bigIntReplacer } from "@/utils"
 import { type Hex, parseAbi } from "viem"
-import type { HookArgs } from "../utils/types"
+import type { HookProps } from "../utils/types"
 
-export type PreUseCreateBatchSessionArgs = {
+export type PreUseCreateBatchSessionProps = {
   chainId: number
 }
 
@@ -12,7 +12,7 @@ export const contractAddress: Hex = "0xC834b3804817883a6b7072e815C3faf8682bFA13"
 const order = parseAbi(["function submitOrder(uint256 _orderNum)"])
 const cancel = parseAbi(["function submitCancel(uint256 _orderNum)"])
 
-const CreateBatchSessionComponent = (params: HookArgs) => {
+const CreateBatchSessionComponent = (params: HookProps) => {
   const {
     mutate,
     isPending,
@@ -87,7 +87,7 @@ const CreateBatchSessionComponent = (params: HookArgs) => {
   )
 }
 
-export const CreateBatchSession = (params: HookArgs) => {
+export const CreateBatchSession = (params: HookProps) => {
   return (
     <Providers>
       <CreateBatchSessionComponent {...params} />

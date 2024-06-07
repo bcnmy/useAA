@@ -1,4 +1,4 @@
-import type { PostUseCreateSessionArgs } from "@/hooks/useCreateSession"
+import type { PostUseCreateSessionProps } from "@/hooks/useCreateSession"
 import {
   type BiconomySmartAccountV2,
   type Policy,
@@ -6,9 +6,9 @@ import {
   createSession as createSessionFromSDK,
   createSessionKeyEOA
 } from "@biconomy/account"
-
+/** @ignore */
 export const createSession = async (
-  params: PostUseCreateSessionArgs,
+  params: PostUseCreateSessionProps,
   smartAccountClient: BiconomySmartAccountV2 | null
 ): Promise<UserOpResponse> => {
   if (!smartAccountClient) {
