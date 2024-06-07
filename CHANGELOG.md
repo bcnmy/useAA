@@ -1,5 +1,11 @@
 # @biconomy/use-aa
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated README.md
+
 ## 1.0.11
 
 ### Patch Changes
