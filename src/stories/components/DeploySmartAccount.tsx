@@ -1,9 +1,9 @@
 import { useDeploySmartAccount } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import type { HookArgs } from "@/stories/utils/types"
+import type { HookProps } from "@/stories/utils/types"
 import React from "react"
 
-const DeploySmartAccountComponent = (params: HookArgs) => {
+const DeploySmartAccountComponent = (params: HookProps) => {
   const { wait } = params
   const { mutate, isPending, isError, error, isSuccess, data } =
     useDeploySmartAccount()
@@ -40,7 +40,7 @@ const DeploySmartAccountComponent = (params: HookArgs) => {
   )
 }
 
-export const DeploySmartAccount = (params: HookArgs) => {
+export const DeploySmartAccount = (params: HookProps) => {
   return (
     <Providers>
       <DeploySmartAccountComponent {...params} />

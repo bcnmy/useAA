@@ -1,5 +1,5 @@
 import { TokenFees } from "@/stories/components/TokenFees"
-import type { TokenFeesHookArgs } from "@/stories/utils/types"
+import type { TokenFeesHookProps } from "@/stories/utils/types"
 import { PaymasterMode } from "@biconomy/account"
 
 export default {
@@ -19,7 +19,7 @@ export default {
   }
 }
 
-export const TokenFeesHook = (args: TokenFeesHookArgs) => {
+export const TokenFeesHook = (args: TokenFeesHookProps) => {
   return <TokenFees {...args} />
 }
 

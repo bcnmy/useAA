@@ -1,5 +1,5 @@
 import { Withdraw } from "@/stories/components/Withdraw"
-import type { HookArgs } from "@/stories/utils/types"
+import type { HookProps } from "@/stories/utils/types"
 import { PaymasterMode } from "@biconomy/account"
 
 export default {
@@ -7,7 +7,7 @@ export default {
   component: Withdraw
 }
 
-export const WithdrawHook = (args: HookArgs) => {
+export const WithdrawHook = (args: HookProps) => {
   return <Withdraw {...args} />
 }
 
