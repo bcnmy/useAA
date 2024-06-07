@@ -1,5 +1,17 @@
 # @biconomy/use-aa
 
+## 1.0.11
+
+### Patch Changes
+
+- Gas payment handling
+
+## 1.0.10
+
+### Patch Changes
+
+- Updated docs
+
 ## 1.0.9
 
 ### Patch Changes
