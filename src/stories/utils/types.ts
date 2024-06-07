@@ -1,10 +1,10 @@
 import type { PaymasterMode } from "@biconomy/account"
 
-export type HookArgs = {
+export type HookProps = {
   wait: boolean
 }
 
-export type TokenFeesHookArgs = {
+export type TokenFeesHookProps = {
   paymasterMode: PaymasterMode
   to: string
   value: number

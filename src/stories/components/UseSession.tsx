@@ -3,9 +3,9 @@ import { Providers } from "@/stories/components/Providers"
 import { Sponsored } from "@/utils"
 import React from "react"
 import { encodeFunctionData, parseAbi } from "viem"
-import type { HookArgs } from "../utils/types"
+import type { HookProps } from "../utils/types"
 
-export type PreUseUseSessionArgs = {
+export type PreUseUseSessionProps = {
   chainId: number
 }
 
@@ -14,7 +14,7 @@ export const safeMint = parseAbi([
   "function safeMint(address owner) view returns (uint balance)"
 ])
 
-const UseSessionComponent = ({ wait }: HookArgs) => {
+const UseSessionComponent = ({ wait }: HookProps) => {
   const { mutate, isPending, isError, error, isSuccess, data } = useSession()
   const [txHash, setTxHash] = React.useState("")
   const { smartAccountAddress } = useSmartAccount()
@@ -61,7 +61,7 @@ const UseSessionComponent = ({ wait }: HookArgs) => {
   )
 }
 
-export const UseSession = (params: HookArgs) => {
+export const UseSession = (params: HookProps) => {
   return (
     <Providers>
       <UseSessionComponent {...params} />

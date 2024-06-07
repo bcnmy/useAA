@@ -3,9 +3,9 @@ import { Providers } from "@/stories/components/Providers"
 import { Sponsored, bigIntReplacer } from "@/utils"
 import React from "react"
 import { type Hex, parseAbi } from "viem"
-import type { HookArgs } from "../utils/types"
+import type { HookProps } from "../utils/types"
 
-export type PreUseCreateSessionArgs = {
+export type PreUseCreateSessionProps = {
   chainId: number
 }
 
@@ -14,7 +14,7 @@ export const safeMint = parseAbi([
   "function safeMint(address owner) view returns (uint balance)"
 ])
 
-const CreateSessionComponent = ({ wait }: HookArgs) => {
+const CreateSessionComponent = ({ wait }: HookProps) => {
   const { mutate, isPending, isError, error, isSuccess, data } =
     useCreateSession()
   const [txHash, setTxHash] = React.useState("")
@@ -73,7 +73,7 @@ const CreateSessionComponent = ({ wait }: HookArgs) => {
   )
 }
 
-export const CreateSession = (params: HookArgs) => {
+export const CreateSession = (params: HookProps) => {
   return (
     <Providers>
       <CreateSessionComponent {...params} />

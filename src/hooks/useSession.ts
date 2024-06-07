@@ -10,27 +10,90 @@ import { useMutation } from "@tanstack/react-query"
 import type { Chain, Hex } from "viem"
 import { useChainId } from "wagmi"
 
-export type CoreUseSessionArgs = {
+export type UseSessionProps = {
+  /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions
   transactions: Transaction | Transaction[]
 }
-export type PostUseSessionArgs = CoreUseSessionArgs & {
+export type PostUseSessionProps = UseSessionProps & {
   chain: Chain
   bundlerUrl: string
   smartAccountAddress: Hex
   biconomyPaymasterApiKey: string
 }
+/**
 
-export const useSession = (mutationArgs?: MutationOptionsWithoutMutationFn) => {
+@description Uses a previously created session (see: https://bcnmy.github.io/useAA/functions/useCreateSession.html) which sends transactions in the context of a users smart account.
+
+Mutation function args: {@link UseSessionProps}
+
+@example
+
+```tsx
+import { useSession, useUserOpWait, Options } from "@biconomy/useAA"
+import { polygonAmoy } from "viem/chains"
+import { encodeFunctionData, parseAbi } from "wagmi"
+
+export const UseSession = ({ smartAccountAddress }) => {
+
+  const {
+    mutate,
+    data: userOpResponse,
+    error,
+    isPending,
+  } = useSession();
+
+  const {
+    isLoading: waitIsLoading,
+    isSuccess: waitIsSuccess,
+    error: waitError,
+    data: waitData,
+  } = useUserOpWait(userOpResponse);
+
+  const mintTx = () =>
+    mutate({
+      transactions: {
+        to: "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e",
+        data: encodeFunctionData({
+          abi: parseAbi(["function safeMint(address _to)"]),
+          functionName: "safeMint",
+          args: [smartAccountAddress],
+        }),
+      },
+      options: Options.Sponsored
+    });
+    
+  useEffect(() => {
+    if (waitIsSuccess && waitData?.success === "true") {
+      console.log(
+        "Successful mint: " +
+          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
+      );
+    }
+  }, [waitIsSuccess]);
+
+  return (
+    <ErrorGuard errors={[error, waitError]}>
+      <Button
+        title="Use Session to Mint"
+        onClickFunc={mintTx}
+        isLoading={isPending || waitIsLoading}
+      />
+    </ErrorGuard>
+  );
+};
+```
+*/
+export const useSession = (mutationProps?: MutationOptionsWithoutMutationFn) => {
   const { queryClient, bundlerUrl, paymasterApiKey, smartAccountAddress } =
     useSmartAccount()
   const chainId = useChainId()
 
   const useSessionMutation = useMutation(
     {
-      mutationFn: (_params: CoreUseSessionArgs) => {
+      mutationFn: (_params: UseSessionProps) => {
         const chain = getChain(chainId)
-        const params: PostUseSessionArgs = {
+        const params: PostUseSessionProps = {
           bundlerUrl,
           biconomyPaymasterApiKey: paymasterApiKey,
           smartAccountAddress,
@@ -40,7 +103,7 @@ export const useSession = (mutationArgs?: MutationOptionsWithoutMutationFn) => {
 
         return useSessionAction(params)
       },
-      ...mutationArgs
+      ...mutationProps
     },
     queryClient
   )

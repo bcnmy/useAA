@@ -1,14 +1,14 @@
-import type { PostUseBatchSessionArgs } from "@/hooks/useBatchSession"
-import { getNowNonce, mergeOptions } from "@/utils"
+import type { PostUseBatchSessionProps } from "@/hooks/useBatchSession"
+import { Options, mergeOptions } from "@/utils"
 import {
   type Hex,
   type UserOpResponse,
   createSessionSmartAccountClient,
   getBatchSessionTxParams
 } from "@biconomy/account"
-
+/** @ignore */
 export const useBatchSessionAction = async (
-  params: PostUseBatchSessionArgs
+  params: PostUseBatchSessionProps
 ): Promise<UserOpResponse> => {
   const {
     smartAccountAddress,
@@ -38,7 +38,7 @@ export const useBatchSessionAction = async (
 
   const options = mergeOptions([
     params.options,
-    getNowNonce(),
+    Options.getNowNonce(),
     batchSessionParams
   ])
 

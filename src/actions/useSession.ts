@@ -1,14 +1,14 @@
-import type { PostUseSessionArgs } from "@/hooks/useSession"
-import { getNowNonce, mergeOptions } from "@/utils"
+import type { PostUseSessionProps } from "@/hooks/useSession"
+import { Options, mergeOptions } from "@/utils"
 import {
   type Hex,
   type UserOpResponse,
   createSessionSmartAccountClient,
   getSingleSessionTxParams
 } from "@biconomy/account"
-
+/** @ignore */
 export const useSessionAction = async (
-  params: PostUseSessionArgs
+  params: PostUseSessionProps
 ): Promise<UserOpResponse> => {
   const {
     smartAccountAddress,
@@ -35,7 +35,7 @@ export const useSessionAction = async (
 
   const options = mergeOptions([
     params.options,
-    getNowNonce(),
+    Options.getNowNonce(),
     singleSessionParams
   ])
 

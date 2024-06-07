@@ -14,6 +14,8 @@ import {
 } from "react"
 import { useWalletClient } from "wagmi"
 
+export type {BiconomySmartAccountV2} from "@biconomy/account"
+
 export type BiconomyProviderProps = {
   children: ReactNode
   config: { bundlerUrl: string; paymasterApiKey: string }
@@ -28,6 +30,7 @@ export type BiconomyContextProps = {
   paymasterApiKey: string
 }
 
+/** @ignore */
 export const BiconomyContext = createContext<BiconomyContextProps>({
   smartAccountClient: null,
   queryClient: undefined,
@@ -36,6 +39,46 @@ export const BiconomyContext = createContext<BiconomyContextProps>({
   paymasterApiKey: ""
 })
 
+/**
+
+@description The `BiconomyProvider` component in TypeScript React sets up a context provider for managing BiconomySmartAccountV2 related state and functionality.
+
+@example
+
+```tsx
+import { BiconomyProvider } from "@biconomy/use-aa";
+import { createConfig, http, WagmiProvider } from "wagmi";
+import { polygonAmoy } from "wagmi/chains";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import { bundlerUrl, paymasterApiKey } from "./config";
+
+const wagmiConfig = createConfig({
+  chains: [polygonAmoy],
+  transports: { [polygonAmoy.id]: http() },
+});
+
+const queryClient = new QueryClient();
+
+ReactDOM.createRoot(document?.getElementById("root")!).render(
+  <StrictMode>
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <BiconomyProvider
+          config={{
+            paymasterApiKey,
+            bundlerUrl,
+          }}
+          queryClient={queryClient}
+        >
+          <App />
+        </BiconomyProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  </StrictMode>
+);
+*/
 export const BiconomyProvider = (props: BiconomyProviderProps) => {
   const { children, config, queryClient } = props
   const { bundlerUrl, paymasterApiKey } = config

@@ -1,11 +1,11 @@
 import { useSendWithdrawals } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import type { HookArgs } from "@/stories/utils/types"
+import type { HookProps } from "@/stories/utils/types"
 import { Sponsored } from "@/utils"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import React from "react"
 
-const WithdrawComponent = (params: HookArgs) => {
+const WithdrawComponent = (params: HookProps) => {
   const { wait } = params
   const { mutate, isPending, isError, error, isSuccess, data } =
     useSendWithdrawals()
@@ -46,7 +46,7 @@ const WithdrawComponent = (params: HookArgs) => {
   )
 }
 
-export const Withdraw = (params: HookArgs) => {
+export const Withdraw = (params: HookProps) => {
   return (
     <Providers>
       <WithdrawComponent {...params} />

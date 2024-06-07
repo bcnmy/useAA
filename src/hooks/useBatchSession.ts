@@ -2,24 +2,92 @@ import { useBatchSessionAction } from "@/actions"
 import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
-import { type PartialOptions, getNowNonce, mergeOptions } from "@/utils"
-import { type Transaction, getChain } from "@biconomy/account"
+import { type BuildUserOpOptions, Options, mergeOptions, type Transaction } from "@/utils"
+import { getChain } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import type { Chain, Hex } from "viem"
 import { useChainId } from "wagmi"
 
-export type CoreUseBatchSessionArgs = {
-  options?: PartialOptions
+export type UseBatchSessionProps = {
+  /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
+  options?: BuildUserOpOptions
+  /** The transactions to be batched. */
   transactions: Transaction | Transaction[]
+  /** An array of indexes for the transactions corresponding to the relevant session IDs. */
   correspondingIndexes: number[]
 }
-export type PostUseBatchSessionArgs = CoreUseBatchSessionArgs & {
+export type PostUseBatchSessionProps = UseBatchSessionProps & {
   chain: Chain
   bundlerUrl: string
   smartAccountAddress: Hex
   biconomyPaymasterApiKey: string
 }
+/**
 
+@description Uses a previously created batch session (see: https://bcnmy.github.io/useAA/functions/useCreateBatchSession.html) which batches transactions in the context of a users smart account.
+
+Mutation function args: {@link UseBatchSessionProps}
+
+@example
+
+```tsx
+import { useBatchSession, useUserOpWait, Options } from "@biconomy/useAA"
+import { polygonAmoy } from "viem/chains"
+import { encodeFunctionData, parseAbi } from "wagmi"
+
+export const UseBatchSession = ({ smartAccountAddress }) => {
+
+  const {
+    mutate,
+    data: userOpResponse,
+    error,
+    isPending,
+  } = useBatchSession();
+
+  const {
+    isLoading: waitIsLoading,
+    isSuccess: waitIsSuccess,
+    error: waitError,
+    data: waitData,
+  } = useUserOpWait(userOpResponse);
+
+  const nftMintTx: Transaction = {
+    to: "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e",
+    data: encodeFunctionData({
+      abi: parseAbi(["function safeMint(address _to)"]),
+      functionName: "safeMint",
+      args: [smartAccountAddress],
+    }),
+  };
+
+  const txTwice = () =>
+    mutate({
+      transactions: [nftMintTx, nftMintTx],
+      correspondingIndexes: [0, 1],
+      options: Options.Sponsored
+    });
+    
+  useEffect(() => {
+    if (waitIsSuccess && waitData?.success === "true") {
+      console.log(
+        "Successful mint: " +
+          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
+      );
+    }
+  }, [waitIsSuccess]);
+
+  return (
+    <ErrorGuard errors={[error, waitError]}>
+      <Button
+        title="Use Session to Mint Twice"
+        onClickFunc={txTwice}
+        isLoading={isPending || waitIsLoading}
+      />
+    </ErrorGuard>
+  );
+};
+```
+*/
 export const useBatchSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
@@ -29,10 +97,10 @@ export const useBatchSession = (
 
   const useBatchSessionMutation = useMutation(
     {
-      mutationFn: (_params: CoreUseBatchSessionArgs) => {
-        const options = mergeOptions([_params.options, getNowNonce()])
+      mutationFn: (_params: UseBatchSessionProps) => {
+        const options = mergeOptions([_params.options, Options.getNowNonce()])
         const chain = getChain(chainId)
-        const params: PostUseBatchSessionArgs = {
+        const params: PostUseBatchSessionProps = {
           bundlerUrl,
           biconomyPaymasterApiKey: paymasterApiKey,
           smartAccountAddress,

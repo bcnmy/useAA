@@ -1,4 +1,4 @@
-import type { PostUseCreateSessionArgs } from "@/hooks/useCreateSession"
+import type { PostUseCreateSessionProps } from "@/hooks/useCreateSession"
 import {
   type BiconomySmartAccountV2,
   type CreateSessionDataParams,
@@ -7,11 +7,12 @@ import {
   createBatchSession as createBatchSessionFromSDK,
   createSessionKeyEOA
 } from "@biconomy/account"
-
+/** @ignore */
 export const createBatchSession = async (
-  params: PostUseCreateSessionArgs,
+  params: PostUseCreateSessionProps,
   smartAccountClient: BiconomySmartAccountV2 | null
 ): Promise<UserOpResponse> => {
+
   if (!smartAccountClient) {
     throw new Error("No smart account found!")
   }
