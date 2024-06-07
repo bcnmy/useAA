@@ -1,6 +1,6 @@
-import { PaymasterMode } from "@biconomy/account";
-import type { BuildUserOpOptions } from "@biconomy/account";
-export type { UserOpReceipt, UserOpStatus, UserOpResponse, BuildUserOpOptions, Transaction } from "@biconomy/account";
+import { BICONOMY_TOKEN_PAYMASTER, PaymasterMode } from "@biconomy/account";
+import type { BuildUserOpOptions, Hex, PaymasterFeeQuote } from "@biconomy/account";
+export type { UserOpReceipt, UserOpStatus, UserOpResponse, BuildUserOpOptions, Transaction, PaymasterFeeQuote } from "@biconomy/account";
 
 export type PartialBuildOptionKey = keyof BuildUserOpOptions
 /** @ignore */
@@ -86,6 +86,14 @@ export const Options = {
     getNowNonce: (): BuildUserOpOptions => ({
         nonceOptions: {
             nonceKey: Date.now()
+        }
+    }),
+    getGasTokenFeeQuote: (selectedQuote: PaymasterFeeQuote, spender: Hex = BICONOMY_TOKEN_PAYMASTER, maxApproval = false): BuildUserOpOptions => ({
+        paymasterServiceData: {
+            mode: PaymasterMode.ERC20,
+            feeQuote: selectedQuote,
+            spender: spender,
+            maxApproval,
         }
     }),
     GasTokenPayment,
