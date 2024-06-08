@@ -1,6 +1,6 @@
 import { useSession, useSmartAccount } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import { Sponsored } from "@/utils"
+import { Options } from "@/utils"
 import React from "react"
 import { encodeFunctionData, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"
@@ -30,7 +30,7 @@ const UseSessionComponent = ({ wait }: HookProps) => {
     }
 
     mutate({
-      options: Sponsored,
+      options: Options.Sponsored,
       transactions
     })
   }
