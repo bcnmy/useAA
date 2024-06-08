@@ -21,3 +21,5 @@ export * from "@/hooks/useBatchSession"
 export * from "@/hooks/useUserOpWait"
 
 export * from "@/hooks/useTokenFees"
+
+export * from "@/hooks/useGasEstimate"
