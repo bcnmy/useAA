@@ -1,6 +1,6 @@
 import { useCreateBatchSession, useUserOpWait } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import { Sponsored, bigIntReplacer } from "@/utils"
+import { Options, bigIntReplacer } from "@/utils"
 import { type Hex, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"
 
@@ -63,7 +63,7 @@ const CreateBatchSessionComponent = (params: HookProps) => {
 
   const handleCreateBatchSession = () =>
     mutate({
-      options: Sponsored,
+      options: Options.Sponsored,
       policy
     })
 

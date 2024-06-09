@@ -1,7 +1,7 @@
 import { useSendWithdrawals } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import type { HookProps } from "@/stories/utils/types"
-import { Sponsored } from "@/utils"
+import { Options } from "@/utils"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import React from "react"
 
@@ -12,7 +12,7 @@ const WithdrawComponent = (params: HookProps) => {
   const [txHash, setTxHash] = React.useState("")
 
   const withdrawalRequest = {
-    options: Sponsored
+    options: Options.Sponsored
   }
 
   const handleWithdraw = () => {

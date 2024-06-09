@@ -1,6 +1,6 @@
 import { useCreateSession, useSmartAccount } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import { Sponsored, bigIntReplacer } from "@/utils"
+import { Options, bigIntReplacer } from "@/utils"
 import React from "react"
 import { type Hex, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"
@@ -40,7 +40,7 @@ const CreateSessionComponent = ({ wait }: HookProps) => {
 
   const handleCreateSession = () => {
     mutate({
-      options: Sponsored,
+      options: Options.Sponsored,
       policy
     })
   }
