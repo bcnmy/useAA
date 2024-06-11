@@ -4,8 +4,8 @@ export type HookProps = {
   wait: boolean
 }
 
-export type TokenFeesHookProps = {
+export type TransactionsBuildUseropDtoHookProps = {
   paymasterMode: PaymasterMode
   to: string
   value: number
-}
+};

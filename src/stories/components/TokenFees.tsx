@@ -1,11 +1,11 @@
 import { useTokenFees } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import type { TokenFeesHookProps } from "@/stories/utils/types"
+import type { TransactionsBuildUseropDtoHookProps } from "@/stories/utils/types"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
-const TokenFeesComponent = (params: TokenFeesHookProps) => {
+const TokenFeesComponent = (params: TransactionsBuildUseropDtoHookProps) => {
   const { paymasterMode, to, value } = params
-  const { isPending, isError, error, isSuccess, data } = useTokenFees({
+  const { isPending, isError, error, isSuccess } = useTokenFees({
     transactions: {
       to,
       value
@@ -25,7 +25,7 @@ const TokenFeesComponent = (params: TokenFeesHookProps) => {
   )
 }
 
-export const TokenFees = (params: TokenFeesHookProps) => {
+export const TokenFees = (params: TransactionsBuildUseropDtoHookProps) => {
   return (
     <Providers>
       <TokenFeesComponent {...params} />
