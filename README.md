@@ -9,7 +9,7 @@
 ## Installation
 
 ```bash
-bun add react react-dom viem wagmi @tanstack/react-query @biconomy/account @biconomy/use-aa
+bun add viem wagmi @tanstack/react-query @biconomy/account @biconomy/use-aa
 ```
 
 ## Documentation
