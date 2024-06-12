@@ -68,13 +68,11 @@ export const UseBatchSession = ({ smartAccountAddress }) => {
     });
     
   useEffect(() => {
-    if (waitIsSuccess && waitData?.success === "true") {
-      console.log(
-        "Successful mint: " +
-          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
-      );
+    if (waitData?.success === "true") {
+      console.log(waitData?.receipt?.transactionHash);
     }
-  }, [waitIsSuccess]);
+  }, [waitData]);
+
 
   return (
     <ErrorGuard errors={[error, waitError]}>
@@ -91,7 +89,7 @@ export const UseBatchSession = ({ smartAccountAddress }) => {
 export const useBatchSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { queryClient, bundlerUrl, paymasterApiKey, smartAccountAddress } =
+  const { queryClient, bundlerUrl, biconomyPaymasterApiKey, smartAccountAddress } =
     useSmartAccount()
   const chainId = useChainId()
 
@@ -102,7 +100,7 @@ export const useBatchSession = (
         const chain = getChain(chainId)
         const params: PostUseBatchSessionProps = {
           bundlerUrl,
-          biconomyPaymasterApiKey: paymasterApiKey,
+          biconomyPaymasterApiKey: biconomyPaymasterApiKey,
           smartAccountAddress,
           chain,
           ..._params,

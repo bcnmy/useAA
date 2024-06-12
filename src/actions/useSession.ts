@@ -15,8 +15,10 @@ export const useSessionAction = async (
     chain,
     transactions,
     biconomyPaymasterApiKey,
-    bundlerUrl
+    bundlerUrl,
+    correspondingIndex
   } = params
+
   const usersSmartAccountClient = await createSessionSmartAccountClient(
     {
       accountAddress: smartAccountAddress as Hex,
@@ -30,7 +32,7 @@ export const useSessionAction = async (
   const singleSessionParams = await getSingleSessionTxParams(
     smartAccountAddress,
     chain,
-    null
+    correspondingIndex ?? null
   )
 
   const options = mergeOptions([

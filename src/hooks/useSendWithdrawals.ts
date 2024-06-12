@@ -57,13 +57,11 @@ export const Withdraw = () => {
   } = useUserOpWait(userOpResponse);
 
   useEffect(() => {
-    if (waitIsSuccess && waitData?.success === "true") {
-      console.log(
-        "Successful mint: " +
-          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
-      );
+    if (waitData?.success === "true") {
+      console.log(waitData?.receipt?.transactionHash);
     }
-  }, [waitIsSuccess]);
+  }, [waitData]);
+
 
   const withdrawalHandler = () => mutate({
     withdrawalRequests: [

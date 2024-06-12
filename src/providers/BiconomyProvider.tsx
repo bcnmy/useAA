@@ -2,7 +2,8 @@ import {
   type BiconomySmartAccountV2,
   type Hex,
   type SupportedSigner,
-  createSmartAccountClient
+  createSmartAccountClient,
+  type BiconomySmartAccountV2Config
 } from "@biconomy/account"
 import type { QueryClient } from "@tanstack/react-query"
 import {
@@ -17,26 +18,34 @@ import { useWalletClient } from "wagmi"
 export type {BiconomySmartAccountV2} from "@biconomy/account"
 
 export type BiconomyProviderProps = {
+  /** The children of the provider */
   children: ReactNode
-  config: { bundlerUrl: string; paymasterApiKey: string }
+  /** The Biconomy configuration */
+  config: Partial<BiconomySmartAccountV2Config> & { bundlerUrl: string, biconomyPaymasterApiKey: string}
+  /** The Tanstack Query client instance */
   queryClient: QueryClient | undefined
 }
 
-export type BiconomyContextProps = {
+export type BiconomyContextPayload = {
+  /** The BiconomySmartAccountV2 instance. This can be used to 'drop down' to the core SDK */
   smartAccountClient: BiconomySmartAccountV2 | null
+  /** The Tanstack Query client instance */
   queryClient: QueryClient | undefined
+  /** The address of the smart account for the user */
   smartAccountAddress: Hex
+  /** The URL of the Biconomy bundler. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
   bundlerUrl: string
-  paymasterApiKey: string
+  /** The paymaster API key. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
+  biconomyPaymasterApiKey: string
 }
 
 /** @ignore */
-export const BiconomyContext = createContext<BiconomyContextProps>({
+export const BiconomyContext = createContext<BiconomyContextPayload>({
   smartAccountClient: null,
   queryClient: undefined,
   smartAccountAddress: "0x",
   bundlerUrl: "",
-  paymasterApiKey: ""
+  biconomyPaymasterApiKey: ""
 })
 
 /**
@@ -52,7 +61,7 @@ import { polygonAmoy } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { bundlerUrl, paymasterApiKey } from "./config";
+import { bundlerUrl, biconomyPaymasterApiKey } from "./config";
 
 const wagmiConfig = createConfig({
   chains: [polygonAmoy],
@@ -67,7 +76,7 @@ ReactDOM.createRoot(document?.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <BiconomyProvider
           config={{
-            paymasterApiKey,
+            biconomyPaymasterApiKey,
             bundlerUrl,
           }}
           queryClient={queryClient}
@@ -81,7 +90,7 @@ ReactDOM.createRoot(document?.getElementById("root")!).render(
 */
 export const BiconomyProvider = (props: BiconomyProviderProps) => {
   const { children, config, queryClient } = props
-  const { bundlerUrl, paymasterApiKey } = config
+  const { bundlerUrl, biconomyPaymasterApiKey } = config
   const [smartAccountClient, setSmartAccountClient] =
     useState<BiconomySmartAccountV2 | null>(null)
   const [smartAccountAddress, setSmartAccountAddress] = useState<Hex>("0x")
@@ -92,11 +101,10 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
 
   useEffect(() => {
     const createSmartAccount = async () => {
-      if (!smartAccountClient || switchAccount) {
+      if ((!smartAccountClient || switchAccount) && !!signer) {
         const smartAccount = await createSmartAccountClient({
           signer: signer as SupportedSigner,
-          bundlerUrl,
-          biconomyPaymasterApiKey: paymasterApiKey
+          bundlerUrl, biconomyPaymasterApiKey
         })
         setSmartAccountClient(smartAccount)
         setSmartAccountAddress(await smartAccount.getAccountAddress())
@@ -104,7 +112,7 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
     }
 
     createSmartAccount()
-  }, [signer, bundlerUrl, paymasterApiKey, smartAccountClient, switchAccount])
+  }, [signer, bundlerUrl, biconomyPaymasterApiKey, smartAccountClient, switchAccount])
 
   const value = useMemo(
     () => ({
@@ -112,14 +120,14 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
       queryClient,
       smartAccountAddress,
       bundlerUrl,
-      paymasterApiKey
+      biconomyPaymasterApiKey
     }),
     [
       smartAccountClient,
       queryClient,
       smartAccountAddress,
       bundlerUrl,
-      paymasterApiKey
+      biconomyPaymasterApiKey
     ]
   )
 
