@@ -1,6 +1,6 @@
 import { useBatchSession } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
-import { Sponsored } from "@/utils"
+import { Options } from "@/utils"
 import type { Transaction } from "@biconomy/account"
 import React from "react"
 import { encodeFunctionData, parseAbi } from "viem"
@@ -42,7 +42,7 @@ const UseBatchSessionComponent = ({ wait }: HookProps) => {
     const correspondingIndexes = [1, 0] // The order of the txs from the sessionBatch
 
     mutate({
-      options: Sponsored,
+      options: Options.Sponsored,
       transactions: txs,
       correspondingIndexes
     })
