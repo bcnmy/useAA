@@ -1,11 +1,11 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Providers } from "@/stories/components/Providers";
-import { TransactionsBuildUseropDtoHookProps } from "@/stories/utils/types";
+import type { TransactionsBuildUseropDtoHookProps } from "@/stories/utils/types";
 import { useGasEstimate } from "@/hooks/useGasEstimate";
 
 const GasEstimateComponent = (params: TransactionsBuildUseropDtoHookProps) => {
   const { paymasterMode, to, value } = params;
-  const { isPending, isError, error, isSuccess } = useGasEstimate({
+  const { isPending, isError, error, isSuccess, data: gasInWei } = useGasEstimate({
     transactions: [
       {
         to,
@@ -22,7 +22,7 @@ const GasEstimateComponent = (params: TransactionsBuildUseropDtoHookProps) => {
       <ConnectButton />
       <span>{isPending && "In progress.."}</span>
       {isError && <span>{error?.message}</span>}
-      {isSuccess && <span>Success!</span>}
+      {isSuccess && <div><span>Success!</span>{gasInWei.toString()}</div>}
     </div>
   );
 };
