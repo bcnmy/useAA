@@ -13,7 +13,7 @@ import type { UseQueryParameters } from "wagmi/query"
 
 export type { FeeQuotesOrDataResponse } from "@biconomy/account"
 
-export type UseTokenFeesPayload = {
+export type UseTokenFeesProps = {
   /** The transactions to be batched. */
   transactions: Transaction | Transaction[]
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
@@ -69,7 +69,7 @@ export const TokenFees = () => {
 ```
 */
 export const useTokenFees = (
-  params: UseTokenFeesPayload,
+  params: UseTokenFeesProps,
   queryParams?: UseQueryParameters
 ) => {
   const { smartAccountClient, queryClient } = useSmartAccount()

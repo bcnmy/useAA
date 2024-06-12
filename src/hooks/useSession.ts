@@ -14,6 +14,7 @@ export type UseSessionProps = {
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions
   transactions: Transaction | Transaction[]
+  correspondingIndex?: number
 }
 export type PostUseSessionProps = UseSessionProps & {
   chain: Chain
@@ -64,13 +65,11 @@ export const UseSession = ({ smartAccountAddress }) => {
     });
     
   useEffect(() => {
-    if (waitIsSuccess && waitData?.success === "true") {
-      console.log(
-        "Successful mint: " +
-          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
-      );
+    if (waitData?.success === "true") {
+      console.log(waitData?.receipt?.transactionHash);
     }
-  }, [waitIsSuccess]);
+  }, [waitData]);
+
 
   return (
     <ErrorGuard errors={[error, waitError]}>
@@ -85,7 +84,7 @@ export const UseSession = ({ smartAccountAddress }) => {
 ```
 */
 export const useSession = (mutationProps?: MutationOptionsWithoutMutationFn) => {
-  const { queryClient, bundlerUrl, paymasterApiKey, smartAccountAddress } =
+  const { queryClient, bundlerUrl, biconomyPaymasterApiKey, smartAccountAddress } =
     useSmartAccount()
   const chainId = useChainId()
 
@@ -95,7 +94,7 @@ export const useSession = (mutationProps?: MutationOptionsWithoutMutationFn) => 
         const chain = getChain(chainId)
         const params: PostUseSessionProps = {
           bundlerUrl,
-          biconomyPaymasterApiKey: paymasterApiKey,
+          biconomyPaymasterApiKey: biconomyPaymasterApiKey,
           smartAccountAddress,
           chain,
           ..._params

@@ -1,10 +1,21 @@
 {
   "name": "@biconomy/use-aa",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "type": "module",
   "module": "./dist/_esm/index.js",
   "types": "./dist/_types/index.d.ts",
   "typings": "./dist/_types/index.d.ts",
+  "description": "React SDK for Biconomy integration with support for account abstraction, smart accounts, ERC-4337.",
+  "keywords": [
+    "erc-7579",
+    "erc-4337",
+    "modular smart account",
+    "account abstraction",
+    "biconomy",
+    "sdk",
+    "react",
+    "hooks"
+  ],
   "scripts": {
     "dev": "bun link && concurrently \"bun run esm:watch\" \"bun run esm:watch:aliases\"",
     "build": "bun run clean && bun run build:esm && bun run build:types",
@@ -80,8 +91,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2",
-    "wagmi": "^2",
-    "@biconomy/account": "^4.4.5"
+    "@biconomy/account": "^4.4.5",
+    "wagmi": "^2"
   },
   "commitlint": {
     "extends": [

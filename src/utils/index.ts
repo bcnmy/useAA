@@ -1,6 +1,8 @@
 import { BICONOMY_TOKEN_PAYMASTER, PaymasterMode } from "@biconomy/account";
 import type { BuildUserOpOptions, Hex, PaymasterFeeQuote } from "@biconomy/account";
 export type { UserOpReceipt, UserOpStatus, UserOpResponse, BuildUserOpOptions, Transaction, PaymasterFeeQuote } from "@biconomy/account";
+import { useRef, useEffect } from 'react';
+import type { MutableRefObject } from 'react';
 
 export type PartialBuildOptionKey = keyof BuildUserOpOptions
 /** @ignore */
@@ -98,4 +100,15 @@ export const Options = {
     }),
     GasTokenPayment,
     Sponsored,
-} 
+}
+
+
+export function usePrevious<T>(
+    value: T
+): MutableRefObject<T | undefined>['current'] {
+    const ref = useRef<T>();
+    useEffect(() => {
+        ref.current = value;
+    }, [value]);
+    return ref.current;
+}
