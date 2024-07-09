@@ -1,13 +1,14 @@
-import type { PostUseBatchSessionProps } from "@/hooks/useBatchSession"
+import type { PostUseDistributedSessionProps } from "@/hooks/useDistributedSession"
 import { Options, mergeOptions } from "@/utils"
 import {
   type Hex,
   type UserOpResponse,
-  createSessionSmartAccountClient
+  createSessionSmartAccountClient,
 } from "@biconomy/account"
+
 /** @ignore */
-export const useBatchSessionAction = async (
-  params: PostUseBatchSessionProps
+export const useDistributedSessionAction = async (
+  params: PostUseDistributedSessionProps
 ): Promise<UserOpResponse> => {
   const {
     smartAccountAddress,
@@ -15,7 +16,7 @@ export const useBatchSessionAction = async (
     transactions,
     biconomyPaymasterApiKey,
     bundlerUrl,
-    correspondingIndexes
+    correspondingIndex
   } = params
 
   const usersSmartAccountClient = await createSessionSmartAccountClient(
@@ -26,7 +27,7 @@ export const useBatchSessionAction = async (
       chainId: chain.id
     },
     smartAccountAddress as Hex,
-    true
+    "DAN"
   )
 
   const options = mergeOptions([
@@ -35,7 +36,7 @@ export const useBatchSessionAction = async (
   ])
 
   return usersSmartAccountClient.sendTransaction(transactions, options, {
-    leafIndex: correspondingIndexes || "LAST_LEAVES",
+    leafIndex: correspondingIndex || "LAST_LEAF",
     store: "DEFAULT_STORE"
   })
 }

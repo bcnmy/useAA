@@ -1,6 +1,6 @@
 {
   "name": "@biconomy/use-aa",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "type": "module",
   "module": "./dist/_esm/index.js",
   "types": "./dist/_types/index.d.ts",
@@ -91,8 +91,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2",
-    "@biconomy/account": "^4.4.5",
-    "wagmi": "^2"
+    "wagmi": "^2",
+    "@biconomy/account": "^4.6.0"
   },
   "commitlint": {
     "extends": [

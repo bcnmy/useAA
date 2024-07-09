@@ -3,9 +3,9 @@ import { Options, mergeOptions } from "@/utils"
 import {
   type Hex,
   type UserOpResponse,
-  createSessionSmartAccountClient,
-  getSingleSessionTxParams
+  createSessionSmartAccountClient
 } from "@biconomy/account"
+
 /** @ignore */
 export const useSessionAction = async (
   params: PostUseSessionProps
@@ -26,20 +26,17 @@ export const useSessionAction = async (
       biconomyPaymasterApiKey,
       chainId: chain.id
     },
-    smartAccountAddress as Hex
-  )
-
-  const singleSessionParams = await getSingleSessionTxParams(
-    smartAccountAddress,
-    chain,
-    correspondingIndex ?? null
+    smartAccountAddress as Hex,
+    "SINGLE"
   )
 
   const options = mergeOptions([
-    params.options,
     Options.getNowNonce(),
-    singleSessionParams
+    params.options,
   ])
 
-  return usersSmartAccountClient.sendTransaction(transactions, options)
+  return usersSmartAccountClient.sendTransaction(transactions, options, {
+    leafIndex: correspondingIndex || "LAST_LEAF",
+    store: "DEFAULT_STORE"
+  })
 }

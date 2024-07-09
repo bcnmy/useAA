@@ -3,9 +3,9 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import { type BuildUserOpOptions, Options, mergeOptions, type Transaction } from "@/utils"
-import { getChain } from "@biconomy/account"
+import { getChain, type GetSessionParams } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
-import type { Chain, Hex } from "viem"
+import type { Hex } from "viem"
 import { useChainId } from "wagmi"
 
 export type UseBatchSessionProps = {
@@ -13,13 +13,14 @@ export type UseBatchSessionProps = {
   options?: BuildUserOpOptions
   /** The transactions to be batched. */
   transactions: Transaction | Transaction[]
-  /** An array of indexes for the transactions corresponding to the relevant session IDs. */
-  correspondingIndexes: number[]
+  // The index of the leaf in the session tree to be used for the session.
+  correspondingIndexes?: GetSessionParams["leafIndex"]
+  /** The smart account address to be used for the session. */
+  smartAccountAddress?: Hex
 }
 export type PostUseBatchSessionProps = UseBatchSessionProps & {
-  chain: Chain
+  chain: ReturnType<typeof getChain>
   bundlerUrl: string
-  smartAccountAddress: Hex
   biconomyPaymasterApiKey: string
 }
 /**
@@ -89,7 +90,7 @@ export const UseBatchSession = ({ smartAccountAddress }) => {
 export const useBatchSession = (
   mutationArgs?: MutationOptionsWithoutMutationFn
 ) => {
-  const { queryClient, bundlerUrl, biconomyPaymasterApiKey, smartAccountAddress } =
+  const { queryClient, bundlerUrl, biconomyPaymasterApiKey, smartAccountAddress: connectedSmartAccount } =
     useSmartAccount()
   const chainId = useChainId()
 
@@ -101,7 +102,7 @@ export const useBatchSession = (
         const params: PostUseBatchSessionProps = {
           bundlerUrl,
           biconomyPaymasterApiKey: biconomyPaymasterApiKey,
-          smartAccountAddress,
+          smartAccountAddress: _params.smartAccountAddress ?? connectedSmartAccount,
           chain,
           ..._params,
           options

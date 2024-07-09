@@ -2,7 +2,6 @@ import { useSendWithdrawals } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import type { HookProps } from "@/stories/utils/types"
 import { Options } from "@/utils"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
 import React from "react"
 
 const WithdrawComponent = (params: HookProps) => {
@@ -35,7 +34,6 @@ const WithdrawComponent = (params: HookProps) => {
 
   return (
     <div>
-      <ConnectButton />
       <button type="button" onClick={handleWithdraw} disabled={isPending}>
         {isPending ? "Withdrawing.." : "Withdraw"}
       </button>

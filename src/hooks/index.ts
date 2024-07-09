@@ -23,3 +23,7 @@ export * from "@/hooks/useUserOpWait"
 export * from "@/hooks/useTokenFees"
 
 export * from "@/hooks/useGasEstimate"
+
+export * from "@/hooks/useDistributedSession"
+
+export * from "@/hooks/useCreateDistributedSession"

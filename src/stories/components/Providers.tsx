@@ -1,6 +1,6 @@
 import { BiconomyProvider } from "@/providers"
 import { biConfig, wagmiConfig } from "@/stories/utils/config"
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit"
+import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { WagmiProvider } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
@@ -13,6 +13,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
+         <ConnectButton />
           <BiconomyProvider config={biConfig} queryClient={queryClient}>
             {children}
           </BiconomyProvider>
