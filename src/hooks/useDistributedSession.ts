@@ -64,7 +64,8 @@ export const UseDistributedSession = ({ smartAccountAddress }) => {
           args: [smartAccountAddress],
         }),
       },
-      options: Options.Sponsored
+      options: Options.Sponsored,
+      smartAccountAddress
     });
     
   useEffect(() => {

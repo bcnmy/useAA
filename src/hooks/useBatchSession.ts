@@ -65,7 +65,8 @@ export const UseBatchSession = ({ smartAccountAddress }) => {
     mutate({
       transactions: [nftMintTx, nftMintTx],
       correspondingIndexes: [0, 1],
-      options: Options.Sponsored
+      options: Options.Sponsored,
+      smartAccountAddress
     });
     
   useEffect(() => {

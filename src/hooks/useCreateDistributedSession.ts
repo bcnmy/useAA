@@ -3,13 +3,13 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import type { BuildUserOpOptions } from "@/utils"
-import { type PolicyWithoutSessionKey, getChain, BrowserWallet } from "@biconomy/account"
+import { type PolicyLeaf, getChain, BrowserWallet } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import { useAccount, useChainId } from "wagmi"
 
 export type UseCreateDistributedSessionProps = {
   /** The array of policy elements to be applied to the session. */
-  policy: PolicyWithoutSessionKey[]
+  policy: PolicyLeaf[]
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions
 }

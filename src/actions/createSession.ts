@@ -15,14 +15,14 @@ export const createSession = async (
     throw new Error("No smart account found!")
   }
 
-  const { policy: policyWithoutSessionKey, chain, options } = params
+  const { policy: policyLeaves, chain, options } = params
 
   const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(
     smartAccountClient,
     chain
   )
 
-  const policy: Policy[] = policyWithoutSessionKey.map((policyElement) => ({
+  const policy: Policy[] = policyLeaves.map((policyElement) => ({
     ...policyElement,
     sessionKeyAddress
   }))
