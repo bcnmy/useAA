@@ -15,12 +15,12 @@ export const createDistributedSession = async (
 
   const { policy: policyWithoutSessionKey, chain, options, browserWallet } = params
 
-  return createDistributedSessionFromSDK(
+  return createDistributedSessionFromSDK({
     smartAccountClient,
-    policyWithoutSessionKey,
-    undefined, // use default storage client
-    options,
-    chain.id,
+    policy: policyWithoutSessionKey,
+    sessionStorageClient: undefined, // use default storage client
+    buildUseropDto: options,
+    chainId: chain.id,
     browserWallet
-  )
+  })
 }
