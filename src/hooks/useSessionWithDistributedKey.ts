@@ -1,4 +1,4 @@
-import { useDistributedSessionAction } from "@/actions"
+import { useSessionWithDistributedKeyAction } from "@/actions"
 import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 import {
@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query"
 import type { Hex } from "viem"
 import { useChainId } from "wagmi"
 
-export type UseDistributedSessionProps = {
+export type UseSessionWithDistributedKeyProps = {
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions
   transactions: Transaction | Transaction[]
@@ -20,7 +20,7 @@ export type UseDistributedSessionProps = {
   // The index of the leaf in the session tree to be used for the session.
   correspondingIndex?: GetSessionParams["leafIndex"]
 }
-export type PostUseDistributedSessionProps = UseDistributedSessionProps & {
+export type PostUseSessionWithDistributedKeyProps = UseSessionWithDistributedKeyProps & {
   chain: ReturnType<typeof getChain>
   bundlerUrl: string
   biconomyPaymasterApiKey: string
@@ -29,23 +29,23 @@ export type PostUseDistributedSessionProps = UseDistributedSessionProps & {
 
 @description Uses a previously created session (see: https://bcnmy.github.io/useAA/functions/useCreateSession.html) which sends transactions in the context of a users smart account.
 
-Mutation function args: {@link UseDistributedSessionProps}
+Mutation function args: {@link UseSessionWithDistributedKeyProps}
 
 @example
 
 ```tsx
-import { useDistributedSession, useUserOpWait, Options } from "@biconomy/useAA"
+import { useSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy/useAA"
 import { polygonAmoy } from "viem/chains"
 import { encodeFunctionData, parseAbi } from "wagmi"
 
-export const UseDistributedSession = ({ smartAccountAddress }) => {
+export const UseSessionWithDistributedKey = ({ smartAccountAddress }) => {
 
   const {
     mutate,
     data: userOpResponse,
     error,
     isPending,
-  } = useDistributedSession();
+  } = useSessionWithDistributedKey();
 
   const {
     isLoading: waitIsLoading,
@@ -87,16 +87,16 @@ export const UseDistributedSession = ({ smartAccountAddress }) => {
 };
 ```
 */
-export const useDistributedSession = (mutationProps?: MutationOptionsWithoutMutationFn) => {
+export const useSessionWithDistributedKey = (mutationProps?: MutationOptionsWithoutMutationFn) => {
   const { queryClient, bundlerUrl, biconomyPaymasterApiKey, smartAccountAddress: connectedSmartAccount } =
     useSmartAccount()
   const chainId = useChainId()
 
-  const useDistributedSessionMutation = useMutation(
+  const useSessionWithDistributedKeyMutation = useMutation(
     {
-      mutationFn: (_params: UseDistributedSessionProps) => {
+      mutationFn: (_params: UseSessionWithDistributedKeyProps) => {
         const chain = getChain(chainId)
-        const params: PostUseDistributedSessionProps = {
+        const params: PostUseSessionWithDistributedKeyProps = {
           bundlerUrl,
           biconomyPaymasterApiKey,
           smartAccountAddress: _params.smartAccountAddress ?? connectedSmartAccount,
@@ -104,12 +104,12 @@ export const useDistributedSession = (mutationProps?: MutationOptionsWithoutMuta
           ..._params
         }
 
-        return useDistributedSessionAction(params)
+        return useSessionWithDistributedKeyAction(params)
       },
       ...mutationProps
     },
     queryClient
   )
 
-  return useDistributedSessionMutation
+  return useSessionWithDistributedKeyMutation
 }

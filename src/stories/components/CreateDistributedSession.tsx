@@ -1,4 +1,4 @@
-import { useCreateDistributedSession, useSmartAccount, useUserOpWait } from "@/hooks"
+import { useCreateSessionWithDistributedKey, useSmartAccount, useUserOpWait } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import { Options, bigIntReplacer } from "@/utils"
 import { type Hex, parseAbi } from "viem"
@@ -6,7 +6,7 @@ import type { HookProps } from "../utils/types"
 import { PolicyHelpers, RuleHelpers, type PolicyLeaf } from "@biconomy/account"
 import { ErrorGuard } from "./ErrorGuard"
 
-export type PreUseCreateDistributedSessionProps = {
+export type PreUseCreateSessionWithDistributedKeyProps = {
   chainId: number
 }
 
@@ -15,9 +15,10 @@ export const safeMint = parseAbi([
   "function safeMint(address owner) view returns (uint balance)"
 ])
 
-const CreateDistributedSessionComponent = () => {
+const CreateSessionWithDistributedKeyComponent = () => {
   const { mutate, isPending, isError, error, isSuccess, data: userOpResponse } =
-    useCreateDistributedSession()
+    useCreateSessionWithDistributedKey()
+    
   const { smartAccountAddress } = useSmartAccount()
 
   const {
@@ -44,11 +45,11 @@ const CreateDistributedSessionComponent = () => {
     }
   ]
 
-  const handleCreateDistributedSession = () => mutate({ options: Options.Sponsored, policy })
+  const handleCreateSessionWithDistributedKey = () => mutate({ options: Options.Sponsored, policy })
 
   return (
     <ErrorGuard errors={[error, waitError]}>
-      <button type="button" onClick={handleCreateDistributedSession} disabled={isLoading}>
+      <button type="button" onClick={handleCreateSessionWithDistributedKey} disabled={isLoading}>
         {isLoading ? "Creating a Session..." : "Create a Session"}
       </button>
       {isError && <span>{error?.message}</span>}
@@ -59,10 +60,10 @@ const CreateDistributedSessionComponent = () => {
   )
 }
 
-export const CreateDistributedSession = (params: HookProps) => {
+export const CreateSessionWithDistributedKey = (params: HookProps) => {
   return (
     <Providers>
-      <CreateDistributedSessionComponent />
+      <CreateSessionWithDistributedKeyComponent />
     </Providers>
   )
 }

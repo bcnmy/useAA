@@ -1,12 +1,14 @@
-import type { PostUseCreateDistributedSessionProps } from "@/hooks/useCreateDistributedSession"
 import {
   type BiconomySmartAccountV2,
   type UserOpResponse,
-  createDistributedSession as createDistributedSessionFromSDK,
+  createSessionWithDistributedKey as createSessionWithDistributedKeyFromSDK,
 } from "@biconomy/account"
+import type { PostUseCreateSessionWithDistributedKeyProps } from "@/hooks/useCreateSessionWithDistributedKey"
+
+
 /** @ignore */
-export const createDistributedSession = async (
-  params: PostUseCreateDistributedSessionProps,
+export const createSessionWithDistributedKey = async (
+  params: PostUseCreateSessionWithDistributedKeyProps,
   smartAccountClient: BiconomySmartAccountV2 | null
 ): Promise<UserOpResponse> => {
   if (!smartAccountClient) {
@@ -15,7 +17,7 @@ export const createDistributedSession = async (
 
   const { policy, chain, options, browserWallet } = params
 
-  return createDistributedSessionFromSDK({
+  return createSessionWithDistributedKeyFromSDK({
     smartAccountClient,
     policy,
     sessionStorageClient: undefined, // use default storage client

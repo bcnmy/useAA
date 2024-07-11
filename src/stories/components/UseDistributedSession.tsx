@@ -1,4 +1,4 @@
-import { useDistributedSession, useSmartAccount, useUserOpWait } from "@/hooks"
+import { useSessionWithDistributedKey, useSmartAccount, useUserOpWait } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import { Options } from "@/utils"
 import React from "react"
@@ -6,7 +6,7 @@ import { encodeFunctionData, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"
 import { ErrorGuard } from "./ErrorGuard"
 
-export type PreUseUseDistributedSessionProps = {
+export type PreUseUseSessionWithDistributedKeyProps = {
   chainId: number
 }
 
@@ -15,8 +15,8 @@ export const safeMint = parseAbi([
   "function safeMint(address owner) view returns (uint balance)"
 ])
 
-const UseDistributedSessionComponent = ({ wait }: HookProps) => {
-  const { mutate, isPending, isError, error, isSuccess, data: userOpResponse } = useDistributedSession()
+const UseSessionWithDistributedKeyComponent = ({ wait }: HookProps) => {
+  const { mutate, isPending, isError, error, isSuccess, data: userOpResponse } = useSessionWithDistributedKey()
   const { smartAccountAddress } = useSmartAccount()
 
   const {
@@ -27,7 +27,7 @@ const UseDistributedSessionComponent = ({ wait }: HookProps) => {
 
   const isLoading = isPending || waitIsLoading
 
-  const handleUseDistributedSession = () => {
+  const handleUseSessionWithDistributedKey = () => {
     const transactions = {
       to: nftAddress,
       data: encodeFunctionData({
@@ -45,7 +45,7 @@ const UseDistributedSessionComponent = ({ wait }: HookProps) => {
 
   return (
     <ErrorGuard errors={[error, waitError]}>
-      <button type="button" onClick={handleUseDistributedSession} disabled={isLoading}>
+      <button type="button" onClick={handleUseSessionWithDistributedKey} disabled={isLoading}>
         {isLoading ? "Using a Distributed Session..." : "Use a Distributed Session"}
       </button>
       {isError && <span>{error?.message}</span>}
@@ -55,10 +55,10 @@ const UseDistributedSessionComponent = ({ wait }: HookProps) => {
   )
 }
 
-export const UseDistributedSession = (params: HookProps) => {
+export const UseSessionWithDistributedKey = (params: HookProps) => {
   return (
     <Providers>
-      <UseDistributedSessionComponent {...params} />
+      <UseSessionWithDistributedKeyComponent {...params} />
     </Providers>
   )
 }
