@@ -1,4 +1,4 @@
-import type { BuildUserOpOptions } from "@/utils"
+import { mergeOptions, Options, type BuildUserOpOptions } from "@/utils"
 import type { BiconomySmartAccountV2, Transaction } from "@biconomy/account"
 
 export type UseSendSponsoredTransactionProps = {
@@ -16,9 +16,14 @@ export const sendSponsoredTransaction = async (
     throw new Error("No smart account found!")
   }
 
+  const options = mergeOptions([
+    Options.Sponsored,
+    params.options,
+  ])
+
   const result = await smartAccountClient.sendTransaction(
     params.transactions,
-    params.options
+    options
   )
   return result
 }
