@@ -3,10 +3,10 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import { Options, mergeOptions, type BuildUserOpOptions } from "@/utils"
-import type { Hex, PaymasterFeeQuote, Transaction } from "@biconomy/account"
+import type { Hex, PaymasterFeeQuote, Transaction } from "@biconomy-devx/account"
 import { useMutation } from "@tanstack/react-query"
 
-export type { PaymasterFeeQuote } from "@biconomy/account"
+export type { PaymasterFeeQuote } from "@biconomy-devx/account"
 
 export type UseSendGasTokenTransactionProps = {
   /** The transaction or transactions to send */

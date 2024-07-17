@@ -4,7 +4,7 @@ import {
   type SupportedSigner,
   createSmartAccountClient,
   type BiconomySmartAccountV2Config
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 import type { QueryClient } from "@tanstack/react-query"
 import {
   type ReactNode,
@@ -15,7 +15,7 @@ import {
 } from "react"
 import { useWalletClient } from "wagmi"
 
-export type {BiconomySmartAccountV2} from "@biconomy/account"
+export type {BiconomySmartAccountV2} from "@biconomy-devx/account"
 
 export type BiconomyProviderProps = {
   /** The children of the provider */

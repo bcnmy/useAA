@@ -1,5 +1,5 @@
 import { useSmartAccount } from "@/hooks"
-import type { UserOpReceipt, UserOpResponse } from "@biconomy/account"
+import type { UserOpReceipt, UserOpResponse } from "@biconomy-devx/account"
 import {
   type QueryKey,
   type UseQueryOptions,

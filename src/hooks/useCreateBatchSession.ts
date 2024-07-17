@@ -2,12 +2,12 @@ import { createBatchSession } from "@/actions/createBatchSession"
 import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
-import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account"
+import { type Policy as PolicyFromSDK, getChain } from "@biconomy-devx/account"
 import { type UseMutationResult, useMutation } from "@tanstack/react-query"
 import type { BuildUserOpOptions, UserOpResponse } from "@/utils"
 import { useChainId } from "wagmi"
 
-export { type Policy as PolicyFromSDK } from "@biconomy/account"
+export { type Policy as PolicyFromSDK } from "@biconomy-devx/account"
 export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
 export type UseCreateBatchSessionProps = {
   /** The array of policy elements to be applied to the session. */

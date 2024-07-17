@@ -5,7 +5,7 @@ import {
   type UserOpResponse,
   createSession as createSessionFromSDK,
   createSessionKeyEOA
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 /** @ignore */
 export const createSession = async (
   params: PostUseCreateSessionProps,

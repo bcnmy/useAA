@@ -3,7 +3,7 @@ import { Providers } from "@/stories/components/Providers"
 import { Options, bigIntReplacer } from "@/utils"
 import { type Hex, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"
-import { PolicyHelpers, RuleHelpers, type PolicyLeaf } from "@biconomy/account"
+import { PolicyHelpers, RuleHelpers, type PolicyLeaf } from "@biconomy-devx/account"
 import { ErrorGuard } from "./ErrorGuard"
 
 export type PreUseCreateSessionWithDistributedKeyProps = {

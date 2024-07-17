@@ -2,7 +2,7 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import type { BuildUserOpOptions } from "@/utils"
-import type { Transaction, UserOpResponse } from "@biconomy/account"
+import type { Transaction, UserOpResponse } from "@biconomy-devx/account"
 import { useMutation } from "@tanstack/react-query"
 
 export type UseSendTransactionProps = {

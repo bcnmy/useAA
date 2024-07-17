@@ -6,7 +6,7 @@ import {
   createABISessionDatum,
   createBatchSession as createBatchSessionFromSDK,
   createSessionKeyEOA
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 /** @ignore */
 export const createBatchSession = async (
   params: PostUseCreateSessionProps,

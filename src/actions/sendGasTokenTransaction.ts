@@ -1,5 +1,5 @@
 import type { PostUseSendGasTokenTransactionProps } from "@/hooks/useSendGasTokenTransaction"
-import type { BiconomySmartAccountV2 } from "@biconomy/account"
+import type { BiconomySmartAccountV2 } from "@biconomy-devx/account"
 /** @ignore */
 export const sendGasTokenTransaction = async (
   params: PostUseSendGasTokenTransactionProps,

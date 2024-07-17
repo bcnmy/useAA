@@ -4,7 +4,7 @@ import {
   type Hex,
   type UserOpResponse,
   createSessionSmartAccountClient
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 
 /** @ignore */
 export const useSessionAction = async (

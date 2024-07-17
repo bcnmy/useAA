@@ -2,7 +2,7 @@ import {
   type BiconomySmartAccountV2,
   type UserOpResponse,
   createSessionWithDistributedKey as createSessionWithDistributedKeyFromSDK,
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 import type { PostUseCreateSessionWithDistributedKeyProps } from "@/hooks/useCreateSessionWithDistributedKey"
 
 

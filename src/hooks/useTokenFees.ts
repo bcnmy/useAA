@@ -3,7 +3,7 @@ import { mergeOptions, type BuildUserOpOptions, Options } from "@/utils"
 import type {
   FeeQuotesOrDataResponse,
   Transaction
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 import {
   type QueryKey,
   type UseQueryOptions,
@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-query"
 import type { UseQueryParameters } from "wagmi/query"
 
-export type { FeeQuotesOrDataResponse } from "@biconomy/account"
+export type { FeeQuotesOrDataResponse } from "@biconomy-devx/account"
 
 export type UseTokenFeesProps = {
   /** The transactions to be batched. */

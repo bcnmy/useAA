@@ -1,6 +1,6 @@
 import { TokenFees } from "@/stories/components/TokenFees"
 import type { TransactionsBuildUseropDtoHookProps } from "@/stories/utils/types"
-import { PaymasterMode } from "@biconomy/account"
+import { PaymasterMode } from "@biconomy-devx/account"
 
 export default {
   title: "TokenFees",

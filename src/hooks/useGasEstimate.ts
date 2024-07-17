@@ -1,5 +1,5 @@
 import { useSmartAccount } from "@/hooks"
-import type { BuildUserOpOptions, Transaction } from "@biconomy/account"
+import type { BuildUserOpOptions, Transaction } from "@biconomy-devx/account"
 import {
   type QueryKey,
   type UseQueryOptions,

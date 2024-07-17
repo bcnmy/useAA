@@ -3,7 +3,7 @@ import {
   type Hex,
   type UserOpResponse,
   createSessionSmartAccountClient,
-} from "@biconomy/account"
+} from "@biconomy-devx/account"
 
 import type { PostUseSessionWithDistributedKeyProps } from "@/hooks/useSessionWithDistributedKey"
 

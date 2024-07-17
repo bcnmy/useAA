@@ -3,7 +3,7 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import { type BuildUserOpOptions, Options, mergeOptions, type Transaction } from "@/utils"
-import { getChain, type GetSessionParams } from "@biconomy/account"
+import { getChain, type GetSessionParams } from "@biconomy-devx/account"
 import { useMutation } from "@tanstack/react-query"
 import type { Hex } from "viem"
 import { useChainId } from "wagmi"
