@@ -24,6 +24,8 @@
     "build:types": "tsc --project ./tsconfig.types.json && tsc-alias -p ./tsconfig.types.json",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "serve": "npx serve ./storybook-static",
     "esm:watch": "tsc --project ./tsconfig.esm.json --watch",
     "esm:watch:aliases": "tsc-alias -p ./tsconfig.esm.json --watch",
     "changeset": "changeset",
