@@ -27,7 +27,7 @@ export const useSessionAction = async (
       chainId: chain.id
     },
     smartAccountAddress as Hex,
-    "SIMPLE"
+    "STANDARD"
   )
 
   const options = mergeOptions([

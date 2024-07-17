@@ -3,7 +3,7 @@ import { Providers } from "@/stories/components/Providers"
 import { Options, bigIntReplacer } from "@/utils"
 import { type Hex, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"
-import { PolicyHelpers, RuleHelpers, type PolicyLeaf } from "@biconomy-devx/account"
+import type { PolicyLeaf } from "@biconomy-devx/account"
 import { ErrorGuard } from "./ErrorGuard"
 
 export type PreUseCreateSessionWithDistributedKeyProps = {
@@ -35,13 +35,13 @@ const CreateSessionWithDistributedKeyComponent = () => {
       functionSelector: safeMint[0],
       rules: [
         {
-          offset: RuleHelpers.OffsetByIndex(0),
-          condition: RuleHelpers.Condition("EQUAL"),
+          offset: 0,
+          condition: 0,
           referenceValue: smartAccountAddress,
         }
       ],
-      interval: PolicyHelpers.Indefinitely,
-      valueLimit: PolicyHelpers.NoValueLimit
+      interval: { validUntil: 0, validAfter: 0 } ,
+      valueLimit: 0n
     }
   ]
 

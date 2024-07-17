@@ -1,6 +1,6 @@
 {
-  "name": "@biconomy/use-aa",
-  "version": "1.1.0",
+  "name": "@biconomy-devx/use-aa",
+  "version": "1.1.9",
   "type": "module",
   "module": "./dist/_esm/index.js",
   "types": "./dist/_types/index.d.ts",
@@ -89,12 +89,12 @@
     "vitest": "^1.2.2"
   },
   "peerDependencies": {
+    "@biconomy-devx/account": "^4.6.14",
     "@tanstack/react-query": "^5.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2",
-    "wagmi": "^2",
-    "@biconomy-devx/account": "^4.6.0"
+    "wagmi": "^2"
   },
   "commitlint": {
     "extends": ["@commitlint/config-conventional"]
