@@ -1,5 +1,11 @@
 # @biconomy/use-aa
 
+## 1.0.15
+
+### Patch Changes
+
+- Fix sponsorship
+
 ## 1.0.14
 
 ### Patch Changes
