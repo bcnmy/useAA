@@ -113,7 +113,8 @@ export const useCreateSessionWithDistributedKey = (
         const params: PostUseCreateSessionWithDistributedKeyProps = {
           ..._params,
           browserWallet,
-          chain
+          chain,
+
         }
 
         return createSessionWithDistributedKey(params, smartAccountClient)

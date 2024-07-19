@@ -23,6 +23,6 @@ export const createSessionWithDistributedKey = async (
     sessionStorageClient: undefined, // use default storage client
     buildUseropDto: options,
     chainId: chain.id,
-    browserWallet
+    browserWallet,
   })
 }
