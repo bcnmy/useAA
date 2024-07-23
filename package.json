@@ -90,17 +90,15 @@
     "vitest": "^1.2.2"
   },
   "peerDependencies": {
-    "@biconomy/account": "4.5.4",
     "@tanstack/react-query": "^5.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2",
+    "@biconomy/account": "^4.5.4",
     "wagmi": "^2"
   },
   "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+    "extends": ["@commitlint/config-conventional"]
   },
   "simple-git-hooks": {
     "pre-commit": "bun run format && bun run lint:fix",
