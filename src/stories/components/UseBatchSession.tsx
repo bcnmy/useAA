@@ -1,7 +1,7 @@
 import { useBatchSession } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import { Options } from "@/utils"
-import type { Transaction } from "@biconomy-devx/account"
+import type { Transaction } from "@biconomy/account"
 import React from "react"
 import { encodeFunctionData, parseAbi } from "viem"
 import type { HookProps } from "../utils/types"

@@ -1,6 +1,6 @@
 import { Withdraw } from "@/stories/components/Withdraw"
 import type { HookProps } from "@/stories/utils/types"
-import { PaymasterMode } from "@biconomy-devx/account"
+import { PaymasterMode } from "@biconomy/account"
 
 export default {
   title: "Withdraw",

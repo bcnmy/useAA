@@ -6,7 +6,7 @@ import {
   type GetSessionParams,
   type Transaction,
   getChain
-} from "@biconomy-devx/account"
+} from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import type { Hex } from "viem"
 import { useChainId } from "wagmi"

@@ -5,7 +5,7 @@ import type {
   BuildUserOpOptions,
   Hex,
   UserOpResponse,
-} from "@biconomy-devx/account"
+} from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import { useWalletClient } from "wagmi"
 
@@ -36,7 +36,7 @@ Mutation function args: {@link UseSendWithdrawalsProps}
 
 import { useSendWithdrawals, useUserOpWait, useSmartAccount } from "@biconomy/useAA"
 import { polygonAmoy } from "viem/chains"
-import { NATIVE_TOKEN_ALIAS } from "@biconomy-devx/account"
+import { NATIVE_TOKEN_ALIAS } from "@biconomy/account"
 
 export const Withdraw = () => {
 

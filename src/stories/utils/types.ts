@@ -1,4 +1,4 @@
-import type { PaymasterMode } from "@biconomy-devx/account"
+import type { PaymasterMode } from "@biconomy/account"
 
 export type HookProps = {
   wait: boolean

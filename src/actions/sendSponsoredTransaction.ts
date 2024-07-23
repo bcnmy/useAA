@@ -1,5 +1,5 @@
 import { mergeOptions, Options, type BuildUserOpOptions } from "@/utils"
-import type { BiconomySmartAccountV2, Transaction } from "@biconomy-devx/account"
+import type { BiconomySmartAccountV2, Transaction } from "@biconomy/account"
 
 export type UseSendSponsoredTransactionProps = {
   /** The transaction or transactions to send */

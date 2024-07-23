@@ -3,7 +3,7 @@ import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import type { BuildUserOpOptions } from "@/utils"
-import { type PolicyLeaf, getChain, BrowserWallet } from "@biconomy-devx/account"
+import { type PolicyLeaf, getChain, BrowserWallet } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
 import { useAccount, useChainId } from "wagmi"
 

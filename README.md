@@ -9,7 +9,7 @@
 ## Installation
 
 ```bash
-bun add viem wagmi @tanstack/react-query @biconomy-devx/account @biconomy/use-aa
+bun add viem wagmi @tanstack/react-query @biconomy/account @biconomy/use-aa
 ```
 
 ## Documentation

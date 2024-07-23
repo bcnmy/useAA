@@ -1,6 +1,6 @@
-import { BICONOMY_TOKEN_PAYMASTER, PaymasterMode } from "@biconomy-devx/account";
-import type { BuildUserOpOptions, Hex, PaymasterFeeQuote } from "@biconomy-devx/account";
-export type { UserOpReceipt, UserOpStatus, UserOpResponse, BuildUserOpOptions, Transaction, PaymasterFeeQuote } from "@biconomy-devx/account";
+import { BICONOMY_TOKEN_PAYMASTER, PaymasterMode } from "@biconomy/account";
+import type { BuildUserOpOptions, Hex, PaymasterFeeQuote } from "@biconomy/account";
+export type { UserOpReceipt, UserOpStatus, UserOpResponse, BuildUserOpOptions, Transaction, PaymasterFeeQuote } from "@biconomy/account";
 import { useRef, useEffect } from 'react';
 import type { MutableRefObject } from 'react';
 
