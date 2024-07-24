@@ -5,7 +5,11 @@ import {
   createSmartAccountClient,
   type BiconomySmartAccountV2Config,
 } from "@biconomy/account";
-import { useQuery, type QueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  UseQueryResult,
+  type QueryClient,
+} from "@tanstack/react-query";
 import { type ReactNode, createContext, useMemo } from "react";
 import { useWalletClient } from "wagmi";
 
@@ -35,7 +39,7 @@ export type BiconomyContextPayload = {
   /** The paymaster API key. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
   biconomyPaymasterApiKey: string;
   /** A boolean indicating whether the smart account is loading */
-  smartAccountIsLoading: boolean;
+  smartAccountQuery: Omit<UseQueryResult, "data"> | null;
 };
 
 /** @ignore */
@@ -45,7 +49,7 @@ export const BiconomyContext = createContext<BiconomyContextPayload>({
   smartAccountAddress: "0x",
   bundlerUrl: "",
   biconomyPaymasterApiKey: "",
-  smartAccountIsLoading: false,
+  smartAccountQuery: null,
 });
 
 /**
@@ -93,7 +97,7 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
   const { bundlerUrl, biconomyPaymasterApiKey } = config;
   const { data: signer } = useWalletClient();
 
-  const { data, isLoading: smartAccountIsLoading } = useQuery({
+  const { data, ...smartAccountQuery } = useQuery({
     queryKey: ["smart-account-address", signer?.account.address],
     queryFn: async () => {
       if (signer) {
@@ -122,7 +126,7 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
       smartAccountAddress,
       bundlerUrl,
       biconomyPaymasterApiKey,
-      smartAccountIsLoading,
+      smartAccountQuery,
     }),
     [
       smartAccountClient,
@@ -130,7 +134,7 @@ export const BiconomyProvider = (props: BiconomyProviderProps) => {
       smartAccountAddress,
       bundlerUrl,
       biconomyPaymasterApiKey,
-      smartAccountIsLoading,
+      smartAccountQuery,
     ]
   );
 
