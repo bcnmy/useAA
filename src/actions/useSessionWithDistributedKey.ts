@@ -1,14 +1,15 @@
-import type { PostUseSessionProps } from "@/hooks/useSession"
 import { Options, mergeOptions } from "@/utils"
 import {
   type Hex,
   type UserOpResponse,
-  createSessionSmartAccountClient
+  createSessionSmartAccountClient,
 } from "@biconomy/account"
 
+import type { PostUseSessionWithDistributedKeyProps } from "@/hooks/useSessionWithDistributedKey"
+
 /** @ignore */
-export const useSessionAction = async (
-  params: PostUseSessionProps
+export const useSessionWithDistributedKeyAction = async (
+  params: PostUseSessionWithDistributedKeyProps
 ): Promise<UserOpResponse> => {
   const {
     smartAccountAddress,
@@ -27,7 +28,7 @@ export const useSessionAction = async (
       chainId: chain.id
     },
     smartAccountAddress as Hex,
-    "STANDARD"
+    "DISTRIBUTED_KEY"
   )
 
   const options = mergeOptions([

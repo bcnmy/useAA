@@ -2,7 +2,6 @@ import { useTokenFees } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import type { TransactionsBuildUseropDtoHookProps } from "@/stories/utils/types"
 import { bigIntReplacer } from "@/utils"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const TokenFeesComponent = (params: TransactionsBuildUseropDtoHookProps) => {
   const { paymasterMode, to, value } = params
@@ -18,7 +17,6 @@ const TokenFeesComponent = (params: TransactionsBuildUseropDtoHookProps) => {
 
   return (
     <div>
-      <ConnectButton />
       <span>{isPending && "In progress.."}</span>
       {isError && <span>{error?.message}</span>}
       {isSuccess && <span>{(data.feeQuotes??[]).map((fee, i) => (<div key={`key-${i+2}`}>{JSON.stringify(fee, bigIntReplacer, 2)}</div>))}</span>}

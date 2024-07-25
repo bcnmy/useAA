@@ -102,11 +102,11 @@ export const useSendGasTokenTransaction = (
         const { transactions, options: _options, tokenParam } = params;
         if (params.tokenParam) {
           const quote = tokenParam as PaymasterFeeQuote;
-          const options = mergeOptions([_options, Options.GasTokenPayment, Options.getGasTokenFeeQuote(quote)])
+          const options = mergeOptions([Options.GasTokenPayment, Options.getGasTokenFeeQuote(quote), _options])
           return sendGasTokenTransaction(({ transactions, options }), smartAccountClient)
         }
         const token = tokenParam as Hex;
-        const options = mergeOptions([_options, Options.GasTokenPayment, Options.getPreferredToken(token)])
+        const options = mergeOptions([Options.GasTokenPayment, Options.getPreferredToken(token), _options])
         return sendGasTokenTransaction(({ transactions, options }), smartAccountClient)
       },
       ...mutationProps

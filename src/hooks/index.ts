@@ -1,3 +1,7 @@
+export * from "@/hooks/useSessionWithDistributedKey"
+
+export * from "@/hooks/useCreateSessionWithDistributedKey"
+
 export * from "@/hooks/useSmartAccount"
 
 export * from "@/hooks/useCreateSession"
@@ -23,3 +27,4 @@ export * from "@/hooks/useUserOpWait"
 export * from "@/hooks/useTokenFees"
 
 export * from "@/hooks/useGasEstimate"
+

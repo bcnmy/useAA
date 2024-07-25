@@ -1,4 +1,3 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Providers } from "@/stories/components/Providers";
 import type { TransactionsBuildUseropDtoHookProps } from "@/stories/utils/types";
 import { useGasEstimate } from "@/hooks/useGasEstimate";
@@ -19,7 +18,6 @@ const GasEstimateComponent = (params: TransactionsBuildUseropDtoHookProps) => {
 
   return (
     <div>
-      <ConnectButton />
       <span>{isPending && "In progress.."}</span>
       {isError && <span>{error?.message}</span>}
       {isSuccess && <div><span>Success!</span>{gasInWei.toString()}</div>}

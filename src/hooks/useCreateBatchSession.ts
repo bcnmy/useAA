@@ -4,9 +4,8 @@ import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import { type Policy as PolicyFromSDK, getChain } from "@biconomy/account"
 import { type UseMutationResult, useMutation } from "@tanstack/react-query"
-import type { Chain } from "viem"
-import { useChainId } from "wagmi"
 import type { BuildUserOpOptions, UserOpResponse } from "@/utils"
+import { useChainId } from "wagmi"
 
 export { type Policy as PolicyFromSDK } from "@biconomy/account"
 export type Policy = Omit<PolicyFromSDK, "sessionKeyAddress">
@@ -17,7 +16,7 @@ export type UseCreateBatchSessionProps = {
   options?: BuildUserOpOptions
 }
 export type PostUseCreateSessionBatchProps = UseCreateBatchSessionProps & {
-  chain: Chain
+  chain: ReturnType<typeof getChain>
 }
 /**
  

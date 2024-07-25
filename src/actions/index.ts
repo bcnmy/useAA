@@ -1,3 +1,5 @@
+export * from "@/actions/useSessionWithDistributedKey"
+export * from "@/actions/createSessionWithDistributedKey"
 export * from "@/actions/sendSponsoredTransaction"
 export * from "@/actions/createSession"
 export * from "@/actions/useSession"

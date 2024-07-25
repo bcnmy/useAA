@@ -1,6 +1,6 @@
 {
   "name": "@biconomy/use-aa",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "type": "module",
   "module": "./dist/_esm/index.js",
   "types": "./dist/_types/index.d.ts",
@@ -78,6 +78,7 @@
     "gh-pages": "^6.1.1",
     "happy-dom": "^13.3.8",
     "jsdom": "^24.0.0",
+    "node-gyp-build": "^4.8.1",
     "rimraf": "^5.0.5",
     "size-limit": "^11",
     "storybook": "^8.0.10",
@@ -93,7 +94,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2",
-    "@biconomy/account": "^4.4.5",
+    "@biconomy/account": "^4.5.4",
     "wagmi": "^2"
   },
   "commitlint": {

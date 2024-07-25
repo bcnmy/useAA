@@ -3,8 +3,7 @@ import { Options, mergeOptions } from "@/utils"
 import {
   type Hex,
   type UserOpResponse,
-  createSessionSmartAccountClient,
-  getBatchSessionTxParams
+  createSessionSmartAccountClient
 } from "@biconomy/account"
 /** @ignore */
 export const useBatchSessionAction = async (
@@ -18,6 +17,7 @@ export const useBatchSessionAction = async (
     bundlerUrl,
     correspondingIndexes
   } = params
+
   const usersSmartAccountClient = await createSessionSmartAccountClient(
     {
       accountAddress: smartAccountAddress as Hex,
@@ -29,18 +29,13 @@ export const useBatchSessionAction = async (
     true
   )
 
-  const batchSessionParams = await getBatchSessionTxParams(
-    Array.isArray(transactions) ? transactions : [transactions],
-    correspondingIndexes,
-    smartAccountAddress,
-    chain
-  )
-
   const options = mergeOptions([
-    params.options,
     Options.getNowNonce(),
-    batchSessionParams
+    params.options,
   ])
 
-  return usersSmartAccountClient.sendTransaction(transactions, options)
+  return usersSmartAccountClient.sendTransaction(transactions, options, {
+    leafIndex: correspondingIndexes || "LAST_LEAVES",
+    store: "DEFAULT_STORE"
+  })
 }

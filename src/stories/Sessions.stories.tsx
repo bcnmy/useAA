@@ -3,6 +3,8 @@ import { CreateSession } from "./components/CreateSession"
 import { UseBatchSession } from "./components/UseBatchSession"
 import { UseSession } from "./components/UseSession"
 import type { HookProps } from "./utils/types"
+import { CreateSessionWithDistributedKey } from "./components/CreateSessionWithDistributedKey"
+import { UseSessionWithDistributedKey } from "./components/UseSessionWithDistributedKey"
 
 export default {
   title: "Sessions",
@@ -38,5 +40,22 @@ export const UseBatchSessionHook = (params: HookProps) => {
 }
 
 UseBatchSessionHook.args = {
+  wait: true
+}
+
+
+export const CreateSessionWithDistributedKeyHook = (params: HookProps) => {
+  return <CreateSessionWithDistributedKey {...params} />
+}
+
+CreateSessionWithDistributedKeyHook.args = {
+  wait: true
+}
+
+export const UseSessionWithDistributedKeyHook = (params: HookProps) => {
+  return <UseSessionWithDistributedKey {...params} />
+}
+
+UseSessionWithDistributedKeyHook.args = {
   wait: true
 }

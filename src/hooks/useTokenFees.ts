@@ -75,7 +75,7 @@ export const useTokenFees = (
   const { smartAccountClient, queryClient } = useSmartAccount()
   const { transactions, options: _options } = params;
 
-  const options = mergeOptions([_options, Options.GasTokenPayment])
+  const options = mergeOptions([Options.GasTokenPayment, _options])
 
   return useQuery(
     {

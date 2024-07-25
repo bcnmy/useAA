@@ -22,9 +22,7 @@ const CreateBatchSessionComponent = (params: HookProps) => {
     data: userOpResponse
   } = useCreateBatchSession()
 
-  const { isSuccess: waitIsSuccess, data: waitData } = useUserOpWait({
-    userOpResponse
-  })
+  const { isSuccess: waitIsSuccess, data: waitData } = useUserOpWait(userOpResponse)
 
   const policy = [
     {
