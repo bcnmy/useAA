@@ -1,36 +1,38 @@
-import { createSession } from "@/actions"
-import { type Policy, useSmartAccount } from "@/hooks"
+import { createSessionWithDistributedKey } from "@/actions"
+import { useSmartAccount } from "@/hooks"
 import type { MutationOptionsWithoutMutationFn } from "@/hooks"
 
 import type { BuildUserOpOptions } from "@/utils"
-import { getChain } from "@biconomy/account"
+import { type PolicyLeaf, getChain, BrowserWallet } from "@biconomy/account"
 import { useMutation } from "@tanstack/react-query"
-import { useChainId } from "wagmi"
+import { useAccount, useChainId } from "wagmi"
 
-export type UseCreateSessionProps = {
+export type UseCreateSessionWithDistributedKeyProps = {
   /** The array of policy elements to be applied to the session. */
-  policy: Policy[]
+  policy: PolicyLeaf[]
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions
 }
-export type PostUseCreateSessionProps = UseCreateSessionProps & {
-  chain: ReturnType<typeof getChain>
+
+export type PostUseCreateSessionWithDistributedKeyProps = UseCreateSessionWithDistributedKeyProps & {
+  chain: ReturnType<typeof getChain>;
+  browserWallet: BrowserWallet;
 }
 /**
 
 @description Creates a session to be used when submitting tx in the context of a users smart account.
 
-Mutation function args: {@link UseCreateSessionProps}
+Mutation function args: {@link UseCreateSessionWithDistributedKeyProps}
 
 @example
 
 ```tsx
 
-import { useCreateSession, useUserOpWait, Options } from "@biconomy/useAA"
+import { useCreateSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy/useAA"
 import { polygonAmoy } from "viem/chains"
 import { encodeFunctionData, parseAbi } from "wagmi"
 
-export const CreateSession = ({userSmartAccountAddress}) => {
+export const CreateSessionWithDistributedKey = ({userSmartAccountAddress}) => {
 
   const policy = [
     {
@@ -56,7 +58,7 @@ export const CreateSession = ({userSmartAccountAddress}) => {
     data: userOpResponse,
     error,
     isPending,
-  } = useCreateSession();
+  } = useCreateSessionWithDistributedKey();
 
   const {
     isLoading: waitIsLoading,
@@ -72,7 +74,7 @@ export const CreateSession = ({userSmartAccountAddress}) => {
   }, [waitData]);
 
 
-  const createSessionHandler = () =>
+  const createSessionWithDistributedKeyHandler = () =>
     mutate({
       policy,
       options: Options.Sponsored,
@@ -82,7 +84,7 @@ export const CreateSession = ({userSmartAccountAddress}) => {
     <ErrorGuard errors={[error, waitError]}>
       <Button
         title="Create a session"
-        onClickFunc={createSessionHandler}
+        onClickFunc={createSessionWithDistributedKeyHandler}
         isLoading={isPending || waitIsLoading}
       />
     </ErrorGuard>
@@ -91,29 +93,36 @@ export const CreateSession = ({userSmartAccountAddress}) => {
 
 ```
 */
-export const useCreateSession = (
+export const useCreateSessionWithDistributedKey = (
   mutationProps?: MutationOptionsWithoutMutationFn
 ) => {
   const { smartAccountClient, queryClient } = useSmartAccount()
   const chainId = useChainId()
+  const { connector } = useAccount();
 
-  const useCreateSessionMutation = useMutation(
+  const useCreateSessionWithDistributedKeyMutation = useMutation(
     {
-      mutationFn: (_params: UseCreateSessionProps) => {
+      mutationFn: async (_params: UseCreateSessionWithDistributedKeyProps) => {
         if (!smartAccountClient) throw new Error("No smart account found")
-        const chain = getChain(chainId)
+        const provider = await connector?.getProvider();
+        if (!provider) throw new Error("No provider found");
 
-        const params: PostUseCreateSessionProps = {
+        const chain = getChain(chainId);
+        const browserWallet = new BrowserWallet(provider as ConstructorParameters<typeof BrowserWallet>[0]);
+
+        const params: PostUseCreateSessionWithDistributedKeyProps = {
           ..._params,
-          chain
+          browserWallet,
+          chain,
+
         }
 
-        return createSession(params, smartAccountClient)
+        return createSessionWithDistributedKey(params, smartAccountClient)
       },
       ...mutationProps
     },
     queryClient
   )
 
-  return useCreateSessionMutation
+  return useCreateSessionWithDistributedKeyMutation
 }

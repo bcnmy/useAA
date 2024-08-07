@@ -17,14 +17,14 @@ export const createBatchSession = async (
     throw new Error("No smart account found!")
   }
 
-  const { policy: policyWithoutSessionKey, chain, options } = params
+  const { policy, chain, options } = params
 
   const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(
     smartAccountClient,
     chain
   )
 
-  const leaves: CreateSessionDataParams[] = policyWithoutSessionKey.map(
+  const leaves: CreateSessionDataParams[] = policy.map(
     (policyElement) =>
       createABISessionDatum({
         ...policyElement,

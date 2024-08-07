@@ -5,7 +5,6 @@ import {
 } from "@/hooks"
 import { Providers } from "@/stories/components/Providers"
 import type { HookProps } from "@/stories/utils/types"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
 import React, { useEffect } from "react"
 import { parseEther } from "viem"
 
@@ -44,7 +43,6 @@ const SendTransactionComponent = (params: HookProps) => {
 
   return (
     <div>
-      <ConnectButton />
       <input
         name="address"
         placeholder="0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC"
@@ -103,7 +101,6 @@ const SendSponsoredTransactionComponent = ({ wait }: HookProps) => {
 
   return (
     <>
-      <ConnectButton />
       <input
         name="address"
         placeholder="0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC"
@@ -168,7 +165,6 @@ const SendGasTokenTransactionComponent = ({ wait }: HookProps) => {
 
   return (
     <>
-      <ConnectButton />
       <input
         name="address"
         placeholder="0xe6dBb5C8696d2E0f90B875cbb6ef26E3bBa575AC"

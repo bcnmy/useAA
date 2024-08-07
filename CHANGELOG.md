@@ -1,5 +1,17 @@
 # @biconomy/use-aa
 
+## 1.1.0
+
+### Minor Changes
+
+- Distributed Session Keys
+
+## 1.1.0
+
+### Minor Changes
+
+- Distributed Sessions
+
 ## 1.0.15
 
 ### Patch Changes

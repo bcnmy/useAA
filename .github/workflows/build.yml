@@ -8,7 +8,25 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          scope: "@silencelaboratories"
+          registry-url: "https://registry.npmjs.org"
+          bun-version: "latest"
+          
+      - name: Install dependencies
+        shell: bash
+        run: bun install --frozen-lockfile
+        env:
+          VITE_SILENCE_LABS_NPM_TOKEN: ${{ secrets.VITE_SILENCE_LABS_NPM_TOKEN }}
+          BUN_AUTH_TOKEN: ${{ secrets.VITE_SILENCE_LABS_NPM_TOKEN }}
+  
       - name: Build
-        uses: ./.github/actions/build
+        shell: bash
+        run: bun run build
+        env:
+          VITE_SILENCE_LABS_NPM_TOKEN: ${{ secrets.VITE_SILENCE_LABS_NPM_TOKEN }}
+          BUN_AUTH_TOKEN: ${{ secrets.VITE_SILENCE_LABS_NPM_TOKEN }}

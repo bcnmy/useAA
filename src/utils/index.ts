@@ -5,6 +5,7 @@ import { useRef, useEffect } from 'react';
 import type { MutableRefObject } from 'react';
 
 export type PartialBuildOptionKey = keyof BuildUserOpOptions
+
 /** @ignore */
 export const deepMerge = (
     target: BuildUserOpOptions = {},
@@ -46,6 +47,7 @@ export const _mergeOptions = (
             deepMerge(acc, item),
         target
     )
+
 /** @ignore */
 export const mergeOptions = (
     options: (BuildUserOpOptions | undefined)[] | BuildUserOpOptions
@@ -102,7 +104,7 @@ export const Options = {
     Sponsored,
 }
 
-
+/** @ignore */
 export function usePrevious<T>(
     value: T
 ): MutableRefObject<T | undefined>['current'] {
